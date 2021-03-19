@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NesJamGame.Engine.Input;
 using System;
 
 namespace NesJamGame
@@ -19,6 +20,7 @@ namespace NesJamGame
 
         RenderTarget2D Canvas;
         int CanvasScale = 1;
+        double mouseInactiveTime = 0;
 
         public Program()
         {
@@ -26,10 +28,12 @@ namespace NesJamGame
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferWidth = 256 * CanvasScale;
             graphics.PreferredBackBufferHeight = 240 * CanvasScale;
+            IsMouseVisible = true;
         }
 
         protected override void Initialize()
         {
+            InputManager.Initialize();
             base.Initialize();
         }
 
@@ -42,6 +46,18 @@ namespace NesJamGame
 
         protected override void Update(GameTime gameTime)
         {
+            InputManager.Update();
+            mouseInactiveTime += gameTime.ElapsedGameTime.TotalSeconds;
+            if (mouseInactiveTime >= 3)
+            {
+                IsMouseVisible = false;
+            }
+            if (InputManager.MouseStateChanged())
+            {
+                IsMouseVisible = true;
+                mouseInactiveTime = 0;
+            }
+
             base.Update(gameTime);
         }
 
