@@ -71,7 +71,6 @@ namespace NesJamGame.Engine.Input
         }
 
         // Mouse
-        // TODO: Mouse Button Detection
         public static bool IsNewPress(MouseButtons button)
         {
             switch (button)
