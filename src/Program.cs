@@ -22,6 +22,7 @@ namespace NesJamGame
         RenderTarget2D Canvas;
         int CanvasScale = 3;
         double mouseInactiveTime = 0;
+        string Text = "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG 1234567890";
 
         public Program()
         {
@@ -76,7 +77,7 @@ namespace NesJamGame
             spriteBatch.Begin();
             // Uncommenting the line below would just crash the game, since there are no scenes yet in the game. -Mew
             // SceneManager.DrawScenes(spriteBatch);
-            TextRenderer.RenderText(spriteBatch, "THE QUICK BROWN FOX JUMPED OVER THE LAZY DOG 1234567890", new Point(0, 10));
+            TextRenderer.RenderText(spriteBatch, Text, new Point(0, 10));
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
