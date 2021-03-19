@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NesJamGame.Engine;
+using NesJamGame.Engine.Graphics;
 using NesJamGame.Engine.Input;
 
 namespace NesJamGame
@@ -19,7 +20,7 @@ namespace NesJamGame
         SpriteBatch spriteBatch;
 
         RenderTarget2D Canvas;
-        int CanvasScale = 2;
+        int CanvasScale = 3;
         double mouseInactiveTime = 0;
 
         public Program()
@@ -41,6 +42,9 @@ namespace NesJamGame
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             SceneManager.Initialize();
+
+            Texture2D chars = Content.Load<Texture2D>("chars");
+            TextRenderer.Initialize(chars, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
 
             Canvas = new RenderTarget2D(GraphicsDevice, 256, 240);
         }
@@ -72,11 +76,12 @@ namespace NesJamGame
             spriteBatch.Begin();
             // Uncommenting the line below would just crash the game, since there are no scenes yet in the game. -Mew
             // SceneManager.DrawScenes(spriteBatch);
+            TextRenderer.RenderText(spriteBatch, "THE QUICK BROWN FOX JUMPED OVER THE LAZY DOG 1234567890", new Point(0, 10));
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(Color.Black);
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
             spriteBatch.Draw(Canvas, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, CanvasScale, SpriteEffects.None, 0f);
             spriteBatch.End();
 
