@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NesJamGame.Engine;
 using NesJamGame.Engine.Input;
-using System;
 
 namespace NesJamGame
 {
@@ -19,7 +19,7 @@ namespace NesJamGame
         SpriteBatch spriteBatch;
 
         RenderTarget2D Canvas;
-        int CanvasScale = 1;
+        int CanvasScale = 2;
         double mouseInactiveTime = 0;
 
         public Program()
@@ -40,6 +40,7 @@ namespace NesJamGame
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            SceneManager.Initialize();
 
             Canvas = new RenderTarget2D(GraphicsDevice, 256, 240);
         }
@@ -47,6 +48,9 @@ namespace NesJamGame
         protected override void Update(GameTime gameTime)
         {
             InputManager.Update();
+            // Uncommenting the line below would just crash the game, since there are no scenes yet in the game. -Mew
+            // SceneManager.UpdateScenes();
+
             mouseInactiveTime += gameTime.ElapsedGameTime.TotalSeconds;
             if (mouseInactiveTime >= 3)
             {
@@ -66,7 +70,8 @@ namespace NesJamGame
             GraphicsDevice.SetRenderTarget(Canvas);
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
-
+            // Uncommenting the line below would just crash the game, since there are no scenes yet in the game. -Mew
+            // SceneManager.DrawScenes(spriteBatch);
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
