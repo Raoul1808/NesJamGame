@@ -22,7 +22,7 @@ namespace NesJamGame
         RenderTarget2D Canvas;
         int CanvasScale = 3;
         double mouseInactiveTime = 0;
-        string Text = "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG 1234567890";
+        string Text = "HELLO WORLD!";
 
         public Program()
         {
@@ -45,7 +45,7 @@ namespace NesJamGame
             SceneManager.Initialize();
 
             Texture2D chars = Content.Load<Texture2D>("chars");
-            TextRenderer.Initialize(chars, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
+            TextRenderer.Initialize(chars, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_!?><");
 
             Canvas = new RenderTarget2D(GraphicsDevice, 256, 240);
         }
