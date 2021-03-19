@@ -52,7 +52,7 @@ namespace NesJamGame
 
         protected override void Update(GameTime gameTime)
         {
-            InputManager.Update();
+            InputManager.Update(CanvasScale);
             // Uncommenting the line below would just crash the game, since there are no scenes yet in the game. -Mew
             // SceneManager.UpdateScenes();
 
@@ -77,7 +77,7 @@ namespace NesJamGame
             spriteBatch.Begin();
             // Uncommenting the line below would just crash the game, since there are no scenes yet in the game. -Mew
             // SceneManager.DrawScenes(spriteBatch);
-            TextRenderer.RenderText(spriteBatch, Text, new Point(0, 10));
+            if (InputManager.GetMousePos() != null) TextRenderer.RenderText(spriteBatch, Text, new Point(0, 10));
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);

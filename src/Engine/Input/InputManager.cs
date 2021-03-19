@@ -9,6 +9,8 @@ namespace NesJamGame.Engine.Input
         private static MouseState mouse, oldMouse;
         private static GamePadState[] gamePads, oldGamePads;
 
+        private static int CanvasScale;
+
         public static void Initialize()
         {
             keyboard = Keyboard.GetState();
@@ -24,8 +26,9 @@ namespace NesJamGame.Engine.Input
             }
         }
 
-        public static void Update()
+        public static void Update(int scale)
         {
+            CanvasScale = scale;
             oldKeyboard = keyboard;
             keyboard = Keyboard.GetState();
 
@@ -164,6 +167,14 @@ namespace NesJamGame.Engine.Input
         public static bool MouseStateChanged()
         {
             return mouse != oldMouse;
+        }
+
+        public static Point? GetMousePos()
+        {
+            double x = mouse.X / CanvasScale;
+            double y = mouse.Y / CanvasScale;
+            if (x > 256 || x < 0 || y < 0 || y > 240) return null;
+            return new Point((int)x, (int)y);
         }
 
         // GamePad
