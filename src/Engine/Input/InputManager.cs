@@ -72,6 +72,96 @@ namespace NesJamGame.Engine.Input
 
         // Mouse
         // TODO: Mouse Button Detection
+        public static bool IsNewPress(MouseButtons button)
+        {
+            switch (button)
+            {
+                case MouseButtons.Left:
+                    return mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released;
+
+                case MouseButtons.Right:
+                    return mouse.RightButton == ButtonState.Pressed && oldMouse.RightButton == ButtonState.Released;
+
+                case MouseButtons.Middle:
+                    return mouse.MiddleButton == ButtonState.Pressed && oldMouse.MiddleButton == ButtonState.Released;
+
+                default:
+                    return false;
+            }
+        }
+
+        public static bool IsNewRelease(MouseButtons button)
+        {
+            switch (button)
+            {
+                case MouseButtons.Left:
+                    return mouse.LeftButton == ButtonState.Released && oldMouse.LeftButton == ButtonState.Pressed;
+
+                case MouseButtons.Right:
+                    return mouse.RightButton == ButtonState.Released && oldMouse.RightButton == ButtonState.Pressed;
+
+                case MouseButtons.Middle:
+                    return mouse.MiddleButton == ButtonState.Released && oldMouse.MiddleButton == ButtonState.Pressed;
+
+                default:
+                    return false;
+            }
+        }
+
+        public static bool IsButtonHeld(MouseButtons button)
+        {
+            switch (button)
+            {
+                case MouseButtons.Left:
+                    return mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Pressed;
+
+                case MouseButtons.Right:
+                    return mouse.RightButton == ButtonState.Pressed && oldMouse.RightButton == ButtonState.Pressed;
+
+                case MouseButtons.Middle:
+                    return mouse.MiddleButton == ButtonState.Pressed && oldMouse.MiddleButton == ButtonState.Pressed;
+
+                default:
+                    return false;
+            }
+        }
+
+        public static bool IsButtonDown(MouseButtons button)
+        {
+            switch (button)
+            {
+                case MouseButtons.Left:
+                    return mouse.LeftButton == ButtonState.Pressed;
+
+                case MouseButtons.Right:
+                    return mouse.RightButton == ButtonState.Pressed;
+
+                case MouseButtons.Middle:
+                    return mouse.MiddleButton == ButtonState.Pressed;
+
+                default:
+                    return false;
+            }
+        }
+
+        public static bool IsButtonUp(MouseButtons button)
+        {
+            switch (button)
+            {
+                case MouseButtons.Left:
+                    return mouse.LeftButton == ButtonState.Released;
+
+                case MouseButtons.Right:
+                    return mouse.RightButton == ButtonState.Released;
+
+                case MouseButtons.Middle:
+                    return mouse.MiddleButton == ButtonState.Released;
+
+                default:
+                    return false;
+            }
+        }
+
         public static bool MouseStateChanged()
         {
             return mouse != oldMouse;
@@ -146,6 +236,12 @@ namespace NesJamGame.Engine.Input
                 return false;
             }
             return gamePads[(int)index].IsButtonUp(button);
+        }
+
+        public static bool GamePadStateChanged(GamePadIndex index, Buttons button)
+        {
+            if (index == GamePadIndex.Any) return gamePads != oldGamePads;
+            return gamePads[(int)index] != oldGamePads[(int)index];
         }
     }
 }
