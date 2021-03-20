@@ -14,13 +14,13 @@ namespace NesJamGame.Engine
         public static double ElapsedGameMilliseconds;
         static double SpeedMultiplier;
 
-        public static void Initialize(double multiplier = 1)
+        public static void Initialize()
         {
             TotalProgramMilliseconds = 0;
             TotalGameMilliseconds = 0;
             ElapsedProgramMilliseconds = 0;
             ElapsedGameMilliseconds = 0;
-            SpeedMultiplier = multiplier;
+            SpeedMultiplier = 1;
         }
 
         public static void Update(GameTime gameTime)
