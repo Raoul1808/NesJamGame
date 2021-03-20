@@ -87,6 +87,8 @@
     <Compile Include="src\Engine\Input\InputManager.cs" />
     <Compile Include="src\Engine\Input\MouseButtons.cs" />
     <Compile Include="src\Engine\Input\NESInput.cs" />
+    <Compile Include="src\Engine\IO\ConfigManager.cs" />
+    <Compile Include="src\Engine\IO\SaveManager.cs" />
     <Compile Include="src\Engine\IScene.cs" />
     <Compile Include="src\Engine\SceneManager.cs" />
     <Compile Include="src\Program.cs" />

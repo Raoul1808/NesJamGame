@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using NesJamGame.Engine;
 using NesJamGame.Engine.Graphics;
 using NesJamGame.Engine.Input;
+using NesJamGame.Engine.IO;
+using System.IO;
+using System.Reflection;
 
 namespace NesJamGame
 {
@@ -10,10 +13,26 @@ namespace NesJamGame
     {
         static void Main(string[] args)
         {
-            using (Game game = new Program())
+            Game game = new Program();
+
+            var gamePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Directory.CreateDirectory(Path.Combine(gamePath, "SaveData"));
+            if (!File.Exists(SaveManager.FilePath))
             {
-                game.Run();
+                SDL2.SDL.SDL_ShowSimpleMessageBox(SDL2.SDL.SDL_MessageBoxFlags.SDL_MESSAGEBOX_INFORMATION, "Missing File", "Save File Missing! The game will automatically generate one.", game.Window.Handle);
+                SaveManager.GenerateDefaultFile();
             }
+
+            if (!File.Exists(ConfigManager.FilePath))
+            {
+                SDL2.SDL.SDL_ShowSimpleMessageBox(SDL2.SDL.SDL_MessageBoxFlags.SDL_MESSAGEBOX_INFORMATION, "Missing File", "Configuration File Missing! The game will automatically generate one.", game.Window.Handle);
+                ConfigManager.GenerateDefaultFile();
+            }
+
+            SaveManager.LoadFile();
+            ConfigManager.LoadFile();
+
+            game.Run();
         }
 
         GraphicsDeviceManager graphics;
@@ -49,6 +68,12 @@ namespace NesJamGame
             TextRenderer.Initialize(chars, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_!?><");
 
             Canvas = new RenderTarget2D(GraphicsDevice, 256, 240);
+        }
+
+        protected override void UnloadContent()
+        {
+            SaveManager.SaveJson();
+            ConfigManager.SaveJson();
         }
 
         protected override void Update(GameTime gameTime)
