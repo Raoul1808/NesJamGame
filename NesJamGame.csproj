@@ -92,6 +92,7 @@
     <Compile Include="src\Engine\IO\SaveManager.cs" />
     <Compile Include="src\Engine\IScene.cs" />
     <Compile Include="src\Engine\SceneManager.cs" />
+    <Compile Include="src\GameContent\DevScene.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -4,12 +4,13 @@ using NesJamGame.Engine;
 using NesJamGame.Engine.Graphics;
 using NesJamGame.Engine.Input;
 using NesJamGame.Engine.IO;
+using NesJamGame.GameContent;
 using System.IO;
 using System.Reflection;
 
 namespace NesJamGame
 {
-    public class Program: Game
+    public class Program : Game
     {
         static void Main(string[] args)
         {
@@ -40,8 +41,6 @@ namespace NesJamGame
 
         RenderTarget2D Canvas;
         int CanvasScale = 3;
-        double mouseInactiveTime = 0;
-        string Text = "HELLO WORLD!";
 
         public Program()
         {
@@ -63,6 +62,7 @@ namespace NesJamGame
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             SceneManager.Initialize();
+            SceneManager.AddScene("DevScene", new DevScene());
 
             Texture2D chars = Content.Load<Texture2D>("chars");
             TextRenderer.Initialize(chars, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_!?><");
@@ -80,20 +80,7 @@ namespace NesJamGame
         {
             InputManager.Update(CanvasScale);
             GlobalTime.Update(gameTime);
-            // Uncommenting the line below would just crash the game, since there are no scenes yet in the game. -Mew
-            // SceneManager.UpdateScenes();
-
-            mouseInactiveTime += GlobalTime.ElapsedProgramMilliseconds / 1000;
-            if (mouseInactiveTime >= 3)
-            {
-                IsMouseVisible = false;
-            }
-            if (InputManager.MouseStateChanged())
-            {
-                IsMouseVisible = true;
-                mouseInactiveTime = 0;
-            }
-
+            SceneManager.UpdateScenes();
             base.Update(gameTime);
         }
 
@@ -102,9 +89,7 @@ namespace NesJamGame
             GraphicsDevice.SetRenderTarget(Canvas);
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
-            // Uncommenting the line below would just crash the game, since there are no scenes yet in the game. -Mew
-            // SceneManager.DrawScenes(spriteBatch);
-            if (InputManager.GetMousePos() != null) TextRenderer.RenderText(spriteBatch, Text, new Point(0, 10));
+            SceneManager.DrawScenes(spriteBatch);
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
