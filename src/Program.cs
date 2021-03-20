@@ -36,6 +36,7 @@ namespace NesJamGame
         protected override void Initialize()
         {
             InputManager.Initialize();
+            GlobalTime.Initialize();
             base.Initialize();
         }
 
@@ -53,10 +54,11 @@ namespace NesJamGame
         protected override void Update(GameTime gameTime)
         {
             InputManager.Update(CanvasScale);
+            GlobalTime.Update(gameTime);
             // Uncommenting the line below would just crash the game, since there are no scenes yet in the game. -Mew
             // SceneManager.UpdateScenes();
 
-            mouseInactiveTime += gameTime.ElapsedGameTime.TotalSeconds;
+            mouseInactiveTime += GlobalTime.ElapsedProgramMilliseconds / 1000;
             if (mouseInactiveTime >= 3)
             {
                 IsMouseVisible = false;
