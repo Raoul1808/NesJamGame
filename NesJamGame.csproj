@@ -79,6 +79,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Engine\GameObject.cs" />
     <Compile Include="src\Engine\GlobalTime.cs" />
     <Compile Include="src\Engine\Graphics\Animation.cs" />
     <Compile Include="src\Engine\Graphics\Sprite.cs" />
