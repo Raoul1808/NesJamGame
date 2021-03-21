@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using NesJamGame.Engine;
 using NesJamGame.Engine.Graphics;
@@ -7,7 +8,7 @@ namespace NesJamGame.GameContent
 {
     public class DevScene : IScene
     {
-        public DevScene()
+        public DevScene(ContentManager Content)
         {
 
         }

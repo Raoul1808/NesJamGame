@@ -169,11 +169,10 @@ namespace NesJamGame.Engine.Input
             return mouse != oldMouse;
         }
 
-        public static Point? GetMousePos()
+        public static Point GetMousePos()
         {
             double x = mouse.X / CanvasScale;
             double y = mouse.Y / CanvasScale;
-            if (x > 256 || x < 0 || y < 0 || y > 240) return null;
             return new Point((int)x, (int)y);
         }
 
