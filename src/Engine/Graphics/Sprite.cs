@@ -7,10 +7,10 @@ namespace NesJamGame.Engine.Graphics
     {
         public Texture2D texture;
         public Rectangle rectangle;
-        public Vector2 offset;
-        public float rotation;
-        public Color color;
-        public SpriteEffects flip;
+        public Vector2 offset = Vector2.Zero;
+        public float rotation = 0f;
+        public Color color = Color.White;
+        public SpriteEffects flip = SpriteEffects.None;
 
         public void Draw(SpriteBatch spriteBatch)
         {
