@@ -79,6 +79,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Engine\Button.cs" />
     <Compile Include="src\Engine\Utilities\Easing.cs" />
     <Compile Include="src\Engine\Utilities\EasingMode.cs" />
     <Compile Include="src\Engine\GlobalTime.cs" />

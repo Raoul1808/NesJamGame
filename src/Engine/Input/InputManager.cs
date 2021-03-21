@@ -171,9 +171,9 @@ namespace NesJamGame.Engine.Input
 
         public static Point GetMousePos()
         {
-            double x = mouse.X / CanvasScale;
-            double y = mouse.Y / CanvasScale;
-            return new Point((int)x, (int)y);
+            //double x = mouse.X / CanvasScale;
+            //double y = mouse.Y / CanvasScale;
+            return new Point((int)mouse.X, (int)mouse.Y);
         }
 
         // GamePad
