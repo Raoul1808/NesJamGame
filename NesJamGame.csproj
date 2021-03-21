@@ -93,8 +93,10 @@
     <Compile Include="src\Engine\IO\SaveManager.cs" />
     <Compile Include="src\Engine\IScene.cs" />
     <Compile Include="src\Engine\SceneManager.cs" />
+    <Compile Include="src\GameContent\ContentIndex.cs" />
     <Compile Include="src\GameContent\DevScene.cs" />
     <Compile Include="src\GameContent\HUD.cs" />
+    <Compile Include="src\GameContent\SettingsButton.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -111,6 +113,12 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Content\chars.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\cog_256.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\frame_256.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SaveData\README.txt">

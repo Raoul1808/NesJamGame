@@ -42,53 +42,53 @@ namespace NesJamGame
         SpriteBatch spriteBatch;
 
         RenderTarget2D Canvas;
-        static int CanvasScale;
+        public static int CanvasScale { get; private set; }
+
+        HUD hud;
 
         public Program()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-
-            string scale = ConfigManager.GetValue("canvas_scale");
-            if (scale == null)
-            {
-                ConfigManager.SetValue("canvas_scale", "2");
-                scale = "2";
-            }
-            UpdateCanvasScale(Convert.ToInt32(scale));
-
+            UpdateCanvasScale(3);
         }
 
         protected override void Initialize()
         {
             InputManager.Initialize();
             GlobalTime.Initialize();
+
+            string scale = ConfigManager.GetValue("canvas_scale");
+            if (scale == null)
+            {
+                ConfigManager.SetValue("canvas_scale", "2");
+                ConfigManager.SaveJson();
+                scale = "2";
+            }
+            UpdateCanvasScale(Convert.ToInt32(scale));
+
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            ContentIndex.LoadContent(Content);
+            hud = new HUD();
             SceneManager.Initialize();
-            SceneManager.AddScene("DevScene", new DevScene(Content));
+            SceneManager.AddScene("DevScene", new DevScene());
 
-            Texture2D chars = Content.Load<Texture2D>("chars");
-            TextRenderer.Initialize(chars, "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_!?><");
+            TextRenderer.Initialize(ContentIndex.Textures["chars"], "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_!?><");
 
             Canvas = new RenderTarget2D(GraphicsDevice, 256, 240);
-        }
-
-        protected override void UnloadContent()
-        {
-            SaveManager.SaveJson();
-            ConfigManager.SaveJson();
         }
 
         protected override void Update(GameTime gameTime)
         {
             InputManager.Update(CanvasScale);
             GlobalTime.Update(gameTime);
+            hud.Update();
             SceneManager.UpdateScenes();
             base.Update(gameTime);
         }
@@ -105,6 +105,7 @@ namespace NesJamGame
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
             spriteBatch.Draw(Canvas, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, CanvasScale, SpriteEffects.None, 0f);
+            hud.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
@@ -115,6 +116,7 @@ namespace NesJamGame
             CanvasScale = newScale;
             graphics.PreferredBackBufferWidth = 256 * CanvasScale;
             graphics.PreferredBackBufferHeight = 240 * CanvasScale;
+            graphics.ApplyChanges();
         }
     }
 }
