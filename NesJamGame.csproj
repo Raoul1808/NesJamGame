@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\Engine\GlobalTime.cs" />
+    <Compile Include="src\Engine\Graphics\Sprite.cs" />
     <Compile Include="src\Engine\Graphics\TextRenderer.cs" />
     <Compile Include="src\Engine\Input\GamePadIndex.cs" />
     <Compile Include="src\Engine\Input\InputManager.cs" />
