@@ -79,6 +79,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Engine\Utilities\Easing.cs" />
+    <Compile Include="src\Engine\Utilities\EasingMode.cs" />
     <Compile Include="src\Engine\GlobalTime.cs" />
     <Compile Include="src\Engine\Graphics\Sprite.cs" />
     <Compile Include="src\Engine\Graphics\TextRenderer.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="src\Engine\IScene.cs" />
     <Compile Include="src\Engine\SceneManager.cs" />
     <Compile Include="src\GameContent\DevScene.cs" />
+    <Compile Include="src\GameContent\HUD.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

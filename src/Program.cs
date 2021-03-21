@@ -5,6 +5,7 @@ using NesJamGame.Engine.Graphics;
 using NesJamGame.Engine.Input;
 using NesJamGame.Engine.IO;
 using NesJamGame.GameContent;
+using SDL2;
 using System.IO;
 using System.Reflection;
 
@@ -20,13 +21,13 @@ namespace NesJamGame
             Directory.CreateDirectory(Path.Combine(gamePath, "SaveData"));
             if (!File.Exists(SaveManager.FilePath))
             {
-                SDL2.SDL.SDL_ShowSimpleMessageBox(SDL2.SDL.SDL_MessageBoxFlags.SDL_MESSAGEBOX_INFORMATION, "Missing File", "Save File Missing! The game will automatically generate one.", game.Window.Handle);
+                SDL.SDL_ShowSimpleMessageBox(SDL.SDL_MessageBoxFlags.SDL_MESSAGEBOX_INFORMATION, "Missing File", "Save File Missing! The game will automatically generate one.", game.Window.Handle);
                 SaveManager.GenerateDefaultFile();
             }
 
             if (!File.Exists(ConfigManager.FilePath))
             {
-                SDL2.SDL.SDL_ShowSimpleMessageBox(SDL2.SDL.SDL_MessageBoxFlags.SDL_MESSAGEBOX_INFORMATION, "Missing File", "Configuration File Missing! The game will automatically generate one.", game.Window.Handle);
+                SDL.SDL_ShowSimpleMessageBox(SDL.SDL_MessageBoxFlags.SDL_MESSAGEBOX_INFORMATION, "Missing File", "Configuration File Missing! The game will automatically generate one.", game.Window.Handle);
                 ConfigManager.GenerateDefaultFile();
             }
 
