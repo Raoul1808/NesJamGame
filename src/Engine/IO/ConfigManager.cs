@@ -28,7 +28,7 @@ namespace NesJamGame.Engine.IO
             else return null;
         }
 
-        public static void SeValue(string key, string value)
+        public static void SetValue(string key, string value)
         {
             if (config.ContainsKey(key))
             {

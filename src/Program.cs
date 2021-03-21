@@ -6,6 +6,7 @@ using NesJamGame.Engine.Input;
 using NesJamGame.Engine.IO;
 using NesJamGame.GameContent;
 using SDL2;
+using System;
 using System.IO;
 using System.Reflection;
 
@@ -37,19 +38,26 @@ namespace NesJamGame
             game.Run();
         }
 
-        GraphicsDeviceManager graphics;
+        static GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
         RenderTarget2D Canvas;
-        int CanvasScale = 3;
+        static int CanvasScale;
 
         public Program()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferWidth = 256 * CanvasScale;
-            graphics.PreferredBackBufferHeight = 240 * CanvasScale;
             IsMouseVisible = true;
+
+            string scale = ConfigManager.GetValue("canvas_scale");
+            if (scale == null)
+            {
+                ConfigManager.SetValue("canvas_scale", "2");
+                scale = "2";
+            }
+            UpdateCanvasScale(Convert.ToInt32(scale));
+
         }
 
         protected override void Initialize()
@@ -100,6 +108,13 @@ namespace NesJamGame
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public static void UpdateCanvasScale(int newScale)
+        {
+            CanvasScale = newScale;
+            graphics.PreferredBackBufferWidth = 256 * CanvasScale;
+            graphics.PreferredBackBufferHeight = 240 * CanvasScale;
         }
     }
 }

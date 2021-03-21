@@ -113,6 +113,9 @@
     <Content Include="Content\chars.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="SaveData\README.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="x64\FAudio.dll" />
     <Content Include="x64\FNA3D.dll" />
     <Content Include="x64\libtheorafile.dll" />
