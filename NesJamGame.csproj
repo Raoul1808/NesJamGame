@@ -95,7 +95,9 @@
     <Compile Include="src\Engine\SceneManager.cs" />
     <Compile Include="src\GameContent\ContentIndex.cs" />
     <Compile Include="src\GameContent\DevScene.cs" />
+    <Compile Include="src\GameContent\GameInput.cs" />
     <Compile Include="src\GameContent\HUD.cs" />
+    <Compile Include="src\GameContent\NESInput.cs" />
     <Compile Include="src\GameContent\SettingsButton.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
