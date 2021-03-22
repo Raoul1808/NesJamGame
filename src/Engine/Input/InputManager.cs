@@ -183,12 +183,12 @@ namespace NesJamGame.Engine.Input
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    if (gamePads[i].IsButtonDown(button) && gamePads[i].IsButtonUp(button))
+                    if (gamePads[i].IsButtonDown(button) && oldGamePads[i].IsButtonUp(button))
                         return true;
                 }
                 return false;
             }
-            return gamePads[(int)index].IsButtonDown(button) && gamePads[(int)index].IsButtonUp(button);
+            return gamePads[(int)index].IsButtonDown(button) && oldGamePads[(int)index].IsButtonUp(button);
         }
 
         public static bool IsNewRelease(GamePadIndex index, Buttons button)
@@ -197,12 +197,12 @@ namespace NesJamGame.Engine.Input
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    if (gamePads[i].IsButtonUp(button) && gamePads[i].IsButtonDown(button))
+                    if (gamePads[i].IsButtonUp(button) && oldGamePads[i].IsButtonDown(button))
                         return true;
                 }
                 return false;
             }
-            return gamePads[(int)index].IsButtonUp(button) && gamePads[(int)index].IsButtonDown(button);
+            return gamePads[(int)index].IsButtonUp(button) && oldGamePads[(int)index].IsButtonDown(button);
         }
 
         public static bool IsButtonHeld(GamePadIndex index, Buttons button)
@@ -239,12 +239,12 @@ namespace NesJamGame.Engine.Input
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    if (gamePads[i].IsButtonUp(button))
+                    if (oldGamePads[i].IsButtonUp(button))
                         return true;
                 }
                 return false;
             }
-            return gamePads[(int)index].IsButtonUp(button);
+            return oldGamePads[(int)index].IsButtonUp(button);
         }
 
         public static bool GamePadStateChanged(GamePadIndex index, Buttons button)
