@@ -13,7 +13,9 @@ namespace NesJamGame.GameContent
         {
             textureNames = new List<string>()
             {
-                "chars"
+                "chars",
+                "DevPlayer",
+                "DevBullet"
             };
 
             Textures = new Dictionary<string, Texture2D>();

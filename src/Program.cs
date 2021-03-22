@@ -5,6 +5,7 @@ using NesJamGame.Engine.Graphics;
 using NesJamGame.Engine.Input;
 using NesJamGame.Engine.IO;
 using NesJamGame.GameContent;
+using NesJamGame.GameContent.Scenes;
 using SDL2;
 using System;
 using System.IO;
@@ -83,7 +84,7 @@ namespace NesJamGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
             ContentIndex.LoadContent(Content);
             SceneManager.Initialize();
-            SceneManager.AddScene("DevScene", new DevScene());
+            SceneManager.AddScene("GameScene", new GameScene());
 
             TextRenderer.Initialize(ContentIndex.Textures["chars"], "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_!?><");
 
@@ -102,7 +103,7 @@ namespace NesJamGame
         {
             GraphicsDevice.SetRenderTarget(Canvas);
             GraphicsDevice.Clear(Color.Black);
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
             SceneManager.DrawScenes(spriteBatch);
             spriteBatch.End();
 
