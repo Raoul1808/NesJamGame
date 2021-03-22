@@ -36,6 +36,9 @@ namespace NesJamGame
             ConfigManager.LoadFile();
 
             game.Run();
+
+            SaveManager.SaveJson();
+            ConfigManager.SaveJson();
         }
 
         static GraphicsDeviceManager graphics;
@@ -43,8 +46,6 @@ namespace NesJamGame
 
         RenderTarget2D Canvas;
         public static int CanvasScale { get; private set; }
-
-        HUD hud;
 
         public Program()
         {
@@ -68,6 +69,12 @@ namespace NesJamGame
             }
             UpdateCanvasScale(Convert.ToInt32(scale));
 
+            if (ConfigManager.GetValue("window_shake") == null)
+            {
+                ConfigManager.SetValue("window_shake", "true");
+                ConfigManager.SaveJson();
+            }
+
             base.Initialize();
         }
 
@@ -75,7 +82,6 @@ namespace NesJamGame
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             ContentIndex.LoadContent(Content);
-            hud = new HUD();
             SceneManager.Initialize();
             SceneManager.AddScene("DevScene", new DevScene());
 
@@ -88,7 +94,6 @@ namespace NesJamGame
         {
             InputManager.Update(CanvasScale);
             GlobalTime.Update(gameTime);
-            hud.Update();
             SceneManager.UpdateScenes();
             base.Update(gameTime);
         }
@@ -105,7 +110,6 @@ namespace NesJamGame
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
             spriteBatch.Draw(Canvas, Vector2.Zero, null, Color.White, 0f, Vector2.Zero, CanvasScale, SpriteEffects.None, 0f);
-            hud.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
