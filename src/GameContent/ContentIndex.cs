@@ -26,7 +26,9 @@ namespace NesJamGame.GameContent
                 "HUD/Number6",
                 "HUD/ResumeText",
                 "HUD/WindowShakeText",
-                "HUD/WindowSizeText"
+                "HUD/WindowSizeText",
+                "HUD/LeftArrow",
+                "HUD/RightArrow"
             };
 
             Textures = new Dictionary<string, Texture2D>();
