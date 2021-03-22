@@ -9,5 +9,7 @@ namespace NesJamGame.GameContent.Entities
         void Draw(SpriteBatch spriteBatch);
         Vector2 GetPos();
         bool CanDispose();
+        void SendHit();
+        Rectangle GetBbox();
     }
 }

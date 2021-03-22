@@ -7,7 +7,7 @@ namespace NesJamGame.GameContent.Scenes
 {
     public class GameScene : IScene
     {
-        List<IEntity> entities;
+        public static List<IEntity> entities;
         static List<IEntity> toAdd;
         List<int> toRemove;
 

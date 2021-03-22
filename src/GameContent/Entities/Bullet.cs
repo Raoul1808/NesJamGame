@@ -12,22 +12,10 @@ namespace NesJamGame.GameContent.Entities
         BulletPath path;
         Vector2 position;
 
-        // Pixels Per Frame speed: 5f. Pixels Per Seconds: 300f
-        const float STRAIGHT_VELOCITY = 300f;
+        float bulletSpeed;
+        bool canDispose;
 
-
-        public Bullet(IEntity entity, BulletPath path)
-        {
-            this.entity = entity;
-            sprite = new Sprite()
-            {
-                texture = ContentIndex.Textures["DevBullet"],
-                rectangle = new Rectangle(0, 0, 2, 4)
-            };
-            position = entity.GetPos();
-        }
-
-        public Bullet(IEntity entity, BulletPath path, Vector2 position)
+        public Bullet(IEntity entity, BulletPath path, Vector2 position, float bulletSpeed)
         {
             this.entity = entity;
             sprite = new Sprite()
@@ -36,6 +24,9 @@ namespace NesJamGame.GameContent.Entities
                 rectangle = new Rectangle(0, 0, 2, 4)
             };
             this.position = position;
+            this.bulletSpeed = bulletSpeed;
+            canDispose = false;
+            this.path = path;
         }
 
         public void Update()
@@ -44,7 +35,11 @@ namespace NesJamGame.GameContent.Entities
             switch (path)
             {
                 case BulletPath.StraightUp:
-                    position.Y -= STRAIGHT_VELOCITY * time;
+                    position.Y -= bulletSpeed * time;
+                    break;
+
+                case BulletPath.StraightDown:
+                    position.Y += bulletSpeed * time;
                     break;
             }
         }
@@ -61,7 +56,17 @@ namespace NesJamGame.GameContent.Entities
 
         public bool CanDispose()
         {
-            return position.Y < 0 || position.Y > 240;
+            return position.Y < 0 || position.Y > 240 || canDispose;
+        }
+
+        public void SendHit()
+        {
+            canDispose = true;
+        }
+
+        public Rectangle GetBbox()
+        {
+            return new Rectangle((int)position.X, (int)position.Y, sprite.rectangle.Width, sprite.rectangle.Height);
         }
     }
 }

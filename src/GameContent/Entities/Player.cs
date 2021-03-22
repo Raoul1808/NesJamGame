@@ -4,6 +4,7 @@ using NesJamGame.Engine;
 using NesJamGame.Engine.Graphics;
 using NesJamGame.Engine.Utilities;
 using NesJamGame.GameContent.Scenes;
+using System;
 
 namespace NesJamGame.GameContent.Entities
 {
@@ -18,8 +19,13 @@ namespace NesJamGame.GameContent.Entities
         // Bullet delay in Frames: 10. Seconds: 0.1
         const double BULLET_SHOOT_DELAY = 0.1;
 
+        // Pixels Per Frame speed: 5f. Pixels Per Seconds: 300f
+        const float BULLET_SPEED = 300f;
+
         double shootDelay;
         double speed;
+
+        Random random;
 
         public Player(int x, int y)
         {
@@ -31,6 +37,7 @@ namespace NesJamGame.GameContent.Entities
             pos = new Vector2(x * 8, y * 8);
             shootDelay = 0;
             speed = 0;
+            random = new Random();
         }
 
         public void Update()
@@ -64,9 +71,10 @@ namespace NesJamGame.GameContent.Entities
                 }
             }
 
-            if (GameInput.IsNewPress(NESInput.B))
+            if (GameInput.IsButtonDown(NESInput.B))
             {
-                speed = 0.8;
+                //speed = 0.8;
+                GameScene.AddEntity(new ClassicEnemy(2, 10));
             }
 
             if (speed > 0)
@@ -99,8 +107,18 @@ namespace NesJamGame.GameContent.Entities
         private void ShootBullet()
         {
             shootDelay = 0;
-            GameScene.AddEntity(new Bullet(this, BulletPath.StraightUp, new Vector2(pos.X + 4, pos.Y + 2)));
-            GameScene.AddEntity(new Bullet(this, BulletPath.StraightUp, new Vector2(pos.X + 10, pos.Y + 2)));
+            GameScene.AddEntity(new Bullet(this, BulletPath.StraightUp, new Vector2(pos.X + 4, pos.Y + 2), BULLET_SPEED));
+            GameScene.AddEntity(new Bullet(this, BulletPath.StraightUp, new Vector2(pos.X + 10, pos.Y + 2), BULLET_SPEED));
+        }
+
+        public void SendHit()
+        {
+
+        }
+
+        public Rectangle GetBbox()
+        {
+            return new Rectangle((int)pos.X, (int)pos.Y, sprite.rectangle.Width, sprite.rectangle.Height);
         }
     }
 }

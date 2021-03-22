@@ -15,7 +15,8 @@ namespace NesJamGame.GameContent
             {
                 "chars",
                 "DevPlayer",
-                "DevBullet"
+                "DevBullet",
+                "DevEnemy"
             };
 
             Textures = new Dictionary<string, Texture2D>();
