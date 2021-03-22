@@ -5,7 +5,7 @@ using NesJamGame.Engine.Graphics;
 using NesJamGame.Engine.Utilities;
 using NesJamGame.GameContent.Scenes;
 
-namespace NesJamGame.GameContent
+namespace NesJamGame.GameContent.Entities
 {
     public class Player : IEntity
     {

@@ -1,4 +1,4 @@
-﻿namespace NesJamGame.GameContent
+﻿namespace NesJamGame.GameContent.Entities
 {
     public enum BulletPath
     {

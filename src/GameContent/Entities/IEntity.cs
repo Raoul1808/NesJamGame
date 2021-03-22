@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace NesJamGame.GameContent
+namespace NesJamGame.GameContent.Entities
 {
     public interface IEntity
     {

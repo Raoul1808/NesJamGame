@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using NesJamGame.Engine;
 using NesJamGame.Engine.Graphics;
 
-namespace NesJamGame.GameContent
+namespace NesJamGame.GameContent.Entities
 {
     public class Bullet : IEntity
     {

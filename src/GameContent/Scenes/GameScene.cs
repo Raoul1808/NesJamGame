@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using NesJamGame.Engine;
-using NesJamGame.Engine.Input;
+using NesJamGame.GameContent.Entities;
 using System.Collections.Generic;
 
 namespace NesJamGame.GameContent.Scenes
