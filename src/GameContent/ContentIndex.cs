@@ -14,8 +14,19 @@ namespace NesJamGame.GameContent
             textureNames = new List<string>()
             {
                 "chars",
-                "cog_256",
-                "frame_256"
+                "HUD/cog_256",
+                "HUD/frame_256",
+                "HUD/Checkbox",
+                "HUD/Checkmark",
+                "HUD/ExitText",
+                "HUD/Number2",
+                "HUD/Number3",
+                "HUD/Number4",
+                "HUD/Number5",
+                "HUD/Number6",
+                "HUD/ResumeText",
+                "HUD/WindowShakeText",
+                "HUD/WindowSizeText"
             };
 
             Textures = new Dictionary<string, Texture2D>();
