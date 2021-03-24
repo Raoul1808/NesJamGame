@@ -8,7 +8,7 @@ using System;
 
 namespace NesJamGame.GameContent.Entities
 {
-    public class ClassicEnemy : IEntity
+    public class ClassicEnemy : Entity
     {
         const float SHOT_SPEED = 2f;
         const float X_VELOCITY = 60f;
@@ -43,7 +43,7 @@ namespace NesJamGame.GameContent.Entities
             progress = 0;
         }
 
-        public void Update()
+        public override void Update()
         {
             float time = (float)GlobalTime.ElapsedGameMilliseconds / 1000;
 
@@ -73,46 +73,42 @@ namespace NesJamGame.GameContent.Entities
             }
             shootTime += time;
 
-            foreach (IEntity entity in GameScene.entities)
-            {
-                if (entity.GetType() == typeof(Bullet))
-                {
-                    Bullet ent = (Bullet)entity;
-                    if (ent.entity.GetType() == typeof(Player))
-                    {
-                        if (ent.GetBbox().Intersects(GetBbox()))
-                        {
-                            canDispose = true;
-                            ent.SendHit();
-                        }
-                    }
-                }
-            }
+            base.Update();
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             sprite.Draw(spriteBatch, new Point((int)position.X, (int)position.Y));
         }
 
-        public Vector2 GetPos()
+        public override Vector2 GetPos()
         {
             return position;
         }
 
-        public bool CanDispose()
+        public override bool CanDispose()
         {
             return canDispose;
         }
 
-        public void SendHit()
+        public override void SendHit()
         {
-
+            canDispose = true;
         }
 
-        public Rectangle GetBbox()
+        public override Rectangle GetBbox()
         {
             return new Rectangle((int)position.X, (int)position.Y, sprite.rectangle.Width, sprite.rectangle.Height);
+        }
+
+        public override void OnEntityCollision(Entity entity)
+        {
+            if (entity.GetType() == typeof(Bullet))
+                if (((Bullet)entity).entity.GetType() == typeof(Player) && !((Bullet)entity).CanDispose())
+                {
+                    SendHit();
+                    ((Bullet)entity).SendHit();
+                }
         }
     }
 }

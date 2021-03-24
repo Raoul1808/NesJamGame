@@ -7,14 +7,14 @@ namespace NesJamGame.GameContent.Scenes
 {
     public class GameScene : IScene
     {
-        public static List<IEntity> entities;
-        static List<IEntity> toAdd;
+        public static List<Entity> entities;
+        static List<Entity> toAdd;
         List<int> toRemove;
 
         public GameScene()
         {
-            entities = new List<IEntity>();
-            toAdd = new List<IEntity>();
+            entities = new List<Entity>();
+            toAdd = new List<Entity>();
             entities.Add(new Player(15, 25));
             toRemove = new List<int>();
         }
@@ -22,7 +22,7 @@ namespace NesJamGame.GameContent.Scenes
         public void Update()
         {
             entities.AddRange(toAdd);
-            toAdd = new List<IEntity>();
+            toAdd = new List<Entity>();
             for (int i = 0; i < entities.Count; i++)
             {
                 if (entities[i].CanDispose()) toRemove.Add(i);
@@ -37,13 +37,13 @@ namespace NesJamGame.GameContent.Scenes
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach(IEntity entity in entities)
+            foreach(Entity entity in entities)
             {
                 entity.Draw(spriteBatch);
             }
         }
 
-        public static void AddEntity(IEntity entity)
+        public static void AddEntity(Entity entity)
         {
             toAdd.Add(entity);
         }

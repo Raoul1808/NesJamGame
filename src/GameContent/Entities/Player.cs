@@ -8,7 +8,7 @@ using System;
 
 namespace NesJamGame.GameContent.Entities
 {
-    public class Player : IEntity
+    public class Player : Entity
     {
         Sprite sprite;
         Vector2 pos;
@@ -40,7 +40,7 @@ namespace NesJamGame.GameContent.Entities
             random = new Random();
         }
 
-        public void Update()
+        public override void Update()
         {
             float time = (float)GlobalTime.ElapsedGameMilliseconds / 1000;
             if (GameInput.IsButtonDown(NESInput.Up))
@@ -88,17 +88,17 @@ namespace NesJamGame.GameContent.Entities
                 shootDelay += time;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             sprite.Draw(spriteBatch, new Point((int)pos.X, (int)pos.Y));
         }
 
-        public Vector2 GetPos()
+        public override Vector2 GetPos()
         {
             return pos;
         }
 
-        public bool CanDispose()
+        public override bool CanDispose()
         {
             return false;
         }
@@ -111,14 +111,19 @@ namespace NesJamGame.GameContent.Entities
             GameScene.AddEntity(new Bullet(this, BulletPath.StraightUp, new Vector2(pos.X + 10, pos.Y + 2), BULLET_SPEED));
         }
 
-        public void SendHit()
+        public override void SendHit()
         {
 
         }
 
-        public Rectangle GetBbox()
+        public override Rectangle GetBbox()
         {
             return new Rectangle((int)pos.X, (int)pos.Y, sprite.rectangle.Width, sprite.rectangle.Height);
+        }
+
+        public override void OnEntityCollision(Entity entity)
+        {
+            
         }
     }
 }

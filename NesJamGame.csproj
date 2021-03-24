@@ -98,8 +98,8 @@
     <Compile Include="src\GameContent\ContentIndex.cs" />
     <Compile Include="src\GameContent\DevScene.cs" />
     <Compile Include="src\GameContent\Entities\ClassicEnemy.cs" />
+    <Compile Include="src\GameContent\Entities\Entity.cs" />
     <Compile Include="src\GameContent\GameInput.cs" />
-    <Compile Include="src\GameContent\Entities\IEntity.cs" />
     <Compile Include="src\GameContent\Scenes\GameScene.cs" />
     <Compile Include="src\GameContent\NESInput.cs" />
     <Compile Include="src\GameContent\Entities\Player.cs" />
