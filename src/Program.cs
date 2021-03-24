@@ -46,6 +46,8 @@ namespace NesJamGame
         SpriteBatch spriteBatch;
 
         RenderTarget2D Canvas;
+        SkyBackground sky;
+
         public static int CanvasScale { get; private set; }
 
         public Program()
@@ -89,6 +91,7 @@ namespace NesJamGame
             TextRenderer.Initialize(ContentIndex.Textures["chars"], "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_!?><");
 
             Canvas = new RenderTarget2D(GraphicsDevice, 256, 240);
+            sky = new SkyBackground();
         }
 
         protected override void Update(GameTime gameTime)
@@ -96,6 +99,7 @@ namespace NesJamGame
             InputManager.Update(CanvasScale);
             GlobalTime.Update(gameTime);
             SceneManager.UpdateScenes();
+            sky.Update();
             base.Update(gameTime);
         }
 
@@ -104,6 +108,7 @@ namespace NesJamGame
             GraphicsDevice.SetRenderTarget(Canvas);
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
+            sky.Draw(spriteBatch);
             SceneManager.DrawScenes(spriteBatch);
             spriteBatch.End();
 

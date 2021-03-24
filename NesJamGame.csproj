@@ -103,6 +103,8 @@
     <Compile Include="src\GameContent\Scenes\GameScene.cs" />
     <Compile Include="src\GameContent\NESInput.cs" />
     <Compile Include="src\GameContent\Entities\Player.cs" />
+    <Compile Include="src\GameContent\SimpleMovingObject.cs" />
+    <Compile Include="src\GameContent\SkyBackground.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
