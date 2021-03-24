@@ -65,6 +65,7 @@ namespace NesJamGame.GameContent.Entities
                 position.X = 256 - sprite.rectangle.Width;
                 goingLeft = true;
             }
+            // FIXME: time-based randomness
             if (shootTime >= (SHOT_SPEED - (random.NextDouble() + (random.Next(0, 2) - 1)/2)))
             {
                 shootTime -= SHOT_SPEED;

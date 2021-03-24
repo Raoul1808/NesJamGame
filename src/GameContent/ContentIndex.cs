@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
@@ -8,8 +9,9 @@ namespace NesJamGame.GameContent
     {
         static List<string> textureNames;
         public static Dictionary<string, Texture2D> Textures;
+        public static Texture2D Pixel;
 
-        public static void LoadContent(ContentManager Content)
+        public static void LoadContent(ContentManager Content, GraphicsDevice GD)
         {
             textureNames = new List<string>()
             {
@@ -24,6 +26,8 @@ namespace NesJamGame.GameContent
             {
                 Textures.Add(asset, Content.Load<Texture2D>(asset));
             }
+            Pixel = new Texture2D(GD, 1, 1);
+            Pixel.SetData(new Color[] { Color.White });
         }
     }
 }

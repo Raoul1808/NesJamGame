@@ -82,7 +82,7 @@ namespace NesJamGame
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            ContentIndex.LoadContent(Content);
+            ContentIndex.LoadContent(Content, GraphicsDevice);
             SceneManager.Initialize();
             SceneManager.AddScene("GameScene", new GameScene());
 
