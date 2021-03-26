@@ -19,10 +19,15 @@ namespace NesJamGame.GameContent.Entities
         // Bullet delay in Frames: 10. Seconds: 0.1
         const double BULLET_SHOOT_DELAY = 0.166666666666;
 
+        // Particle spawning delay
+        const double PARTICLE_SPAWN_DELAY = 0;
+        const int PARTICLE_AMOUNT = 5;
+
         // Pixels Per Frame speed: 5f. Pixels Per Seconds: 300f
         const float BULLET_SPEED = 300f;
 
         double shootDelay;
+        double particleDelay;
         double speed;
 
         Random random;
@@ -36,6 +41,7 @@ namespace NesJamGame.GameContent.Entities
             };
             pos = new Vector2(x * 8, y * 8);
             shootDelay = 0;
+            particleDelay = 0;
             speed = 0;
             random = new Random();
         }
@@ -70,6 +76,11 @@ namespace NesJamGame.GameContent.Entities
                     ShootBullet();
                 }
             }
+            if (particleDelay >= PARTICLE_SPAWN_DELAY)
+            {
+                ParticleManager.CreateParticles(ContentIndex.Pixel, new Vector2(pos.X + random.Next(6, 9), pos.Y + 15), PARTICLE_AMOUNT, new Vector2(0, 1), spread:1, minSpeed:10, maxSpeed:20, Color.CornflowerBlue, colorHueShift:1, 1);
+                particleDelay -= PARTICLE_SPAWN_DELAY;
+            }
 
             if (speed > 0)
             {
@@ -80,6 +91,8 @@ namespace NesJamGame.GameContent.Entities
 
             if (shootDelay < BULLET_SHOOT_DELAY)
                 shootDelay += time;
+            if (particleDelay < PARTICLE_SPAWN_DELAY)
+                particleDelay += time;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

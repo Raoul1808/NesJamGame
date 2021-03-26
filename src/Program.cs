@@ -99,6 +99,7 @@ namespace NesJamGame
             InputManager.Update(CanvasScale);
             GlobalTime.Update(gameTime);
             SceneManager.UpdateScenes();
+            ParticleManager.UpdateParticles();
             sky.Update();
             base.Update(gameTime);
         }
@@ -110,6 +111,7 @@ namespace NesJamGame
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
             sky.Draw(spriteBatch);
             SceneManager.DrawScenes(spriteBatch);
+            ParticleManager.DrawParticles(spriteBatch);
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
