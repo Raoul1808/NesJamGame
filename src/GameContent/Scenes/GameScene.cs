@@ -19,6 +19,8 @@ namespace NesJamGame.GameContent.Scenes
             toAdd = new List<Entity>();
             entities.Add(new Player(15, 25));
             toRemove = new List<int>();
+
+            entities.Add(new ClassicEnemy(2, 2));
         }
 
         public void Update()

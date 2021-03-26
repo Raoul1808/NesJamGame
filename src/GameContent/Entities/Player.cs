@@ -36,7 +36,7 @@ namespace NesJamGame.GameContent.Entities
         {
             sprite = new Sprite()
             {
-                texture = ContentIndex.Textures["DevPlayer"],
+                texture = ContentIndex.Textures["PlayerShip"],
                 rectangle = new Rectangle(0, 0, 16, 16)
             };
             pos = new Vector2(x * 8, y * 8);

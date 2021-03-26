@@ -16,9 +16,12 @@ namespace NesJamGame.GameContent
             textureNames = new List<string>()
             {
                 "chars",
-                "DevPlayer",
                 "DevBullet",
-                "DevEnemy"
+                "PlayerShip",
+                "Enemies/ClassicEnemy",
+                "Enemies/ShieldEnemy",
+                "Enemies/ShieldEnemyNoShield",
+                "Enemies/ShootingEnemy"
             };
 
             Textures = new Dictionary<string, Texture2D>();
