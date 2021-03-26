@@ -14,10 +14,10 @@ namespace NesJamGame.GameContent.Entities
         Vector2 pos;
         // Velocity in Pixels Per Frame (2*60 = 120 Pixels Per Seconds)
         // const float VELOCITY = 2f;
-        const float VELOCITY = 120f;
+        const float VELOCITY = 100f;
 
         // Bullet delay in Frames: 10. Seconds: 0.1
-        const double BULLET_SHOOT_DELAY = 0.1;
+        const double BULLET_SHOOT_DELAY = 0.166666666666;
 
         // Pixels Per Frame speed: 5f. Pixels Per Seconds: 300f
         const float BULLET_SPEED = 300f;
@@ -71,12 +71,6 @@ namespace NesJamGame.GameContent.Entities
                 }
             }
 
-            if (GameInput.IsButtonDown(NESInput.B))
-            {
-                //speed = 0.8;
-                GameScene.AddEntity(new ClassicEnemy(2, 10));
-            }
-
             if (speed > 0)
             {
                 GlobalTime.ChangeSpeed(Easing.ApplyEasingFromOne(1 - speed, EasingMode.CubicIn));
@@ -123,7 +117,15 @@ namespace NesJamGame.GameContent.Entities
 
         public override void OnEntityCollision(Entity entity)
         {
-            
+            if (entity.GetType() == typeof(Bullet))
+            {
+                if (((Bullet)entity).entity.GetType() != typeof(Player))
+                {
+                    ((Bullet)entity).entity.SendHit();
+                    SendHit();
+                }
+            }
+            else SendHit();
         }
     }
 }

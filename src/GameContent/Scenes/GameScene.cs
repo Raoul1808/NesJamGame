@@ -1,5 +1,7 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using NesJamGame.Engine;
+using NesJamGame.Engine.Graphics;
 using NesJamGame.GameContent.Entities;
 using System.Collections.Generic;
 
@@ -41,6 +43,11 @@ namespace NesJamGame.GameContent.Scenes
             {
                 entity.Draw(spriteBatch);
             }
+
+            //TextRenderer.RenderText(spriteBatch, "SCORE", new Point(0, 0));
+            //TextRenderer.RenderText(spriteBatch, "00000000", new Point(0, 1));
+            //TextRenderer.RenderText(spriteBatch, "HI-SCORE", new Point(24, 0));
+            //TextRenderer.RenderText(spriteBatch, "00000000", new Point(24, 1));
         }
 
         public static void AddEntity(Entity entity)
