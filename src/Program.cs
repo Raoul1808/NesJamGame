@@ -82,6 +82,12 @@ namespace NesJamGame
                 ConfigManager.SaveJson();
             }
 
+            if (SaveManager.GetValue("highscore") == null)
+            {
+                SaveManager.SetValue("highscore", "0");
+                SaveManager.SaveJson();
+            }
+
             base.Initialize();
         }
 
