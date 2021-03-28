@@ -86,7 +86,7 @@ namespace NesJamGame.GameContent.Scenes
                     }
                     triggerOnce = true;
                 }
-                if (GameInput.IsNewPress(NESInput.A)) { SceneManager.ChangeScene("MenuScene"); }
+                if (GameInput.IsNewPress(NESInput.A)) { ContentIndex.Sounds["selectHit"].Play(); SceneManager.ChangeScene("MenuScene"); }
             }
             if (paused && !GameOver)
             {
@@ -115,7 +115,11 @@ namespace NesJamGame.GameContent.Scenes
             for (int i = 0; i < toRemove.Count; i++)
             {
                 Entity e = entities[toRemove[i] - i];
-                if (e.GetType() == typeof(ClassicEnemy) || e.GetType() == typeof(ShieldEnemy) || e.GetType() == typeof(ShootingEnemy)) score++;
+                if (e.GetType() == typeof(ClassicEnemy) || e.GetType() == typeof(ShieldEnemy) || e.GetType() == typeof(ShootingEnemy))
+                {
+                    if (!GameOver) score++;
+                    currentSpawnLimit += 0.0002;
+                }
                 entities.RemoveAt(toRemove[i] - i);
             }
             toRemove = new List<int>();
@@ -125,6 +129,13 @@ namespace NesJamGame.GameContent.Scenes
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            if (!GameOver)
+            {
+                TextRenderer.RenderText(spriteBatch, "SCORE", new Point(0, 28));
+                TextRenderer.RenderText(spriteBatch, score.ToString(), new Point(0, 29));
+                TextRenderer.RenderText(spriteBatch, "HIGHSCORE", new Point(23, 28));
+                TextRenderer.RenderText(spriteBatch, SaveManager.GetValue("highscore"), new Point(32 - SaveManager.GetValue("highscore").Length, 29));
+            }
             foreach(Entity entity in entities)
             {
                 entity.Draw(spriteBatch);
@@ -188,7 +199,7 @@ namespace NesJamGame.GameContent.Scenes
                 }
                 else if (rng > (1-zoomingRate))
                 {
-                    EnemySpawner.SpawnZooming(random.Next(0, 32), 100/score);
+                    EnemySpawner.SpawnZooming(random.Next(0, 32), (10000/(score == 0 ? 1 : score)) > 5 ? 5 : (10000/(score == 0 ? 1 : score)) < 2.5 ? 2.5 : 10000/score);
                 }
                 else
                 {
