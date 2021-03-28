@@ -17,6 +17,9 @@ namespace NesJamGame.GameContent.Scenes
         const double FLIP_TIME = 0.333333333333333333333;
         double time;
 
+        bool paused = false;
+        int cursor;
+
         public GameScene()
         {
             entities = new List<Entity>();
@@ -27,10 +30,19 @@ namespace NesJamGame.GameContent.Scenes
             entities.Add(new ClassicEnemy(2, 2));
             Flip = false;
             time = 0;
+            cursor = 13;
         }
 
         public void Update()
         {
+            if (paused)
+            {
+                if (GameInput.IsNewPress(NESInput.Down) && cursor < 14) { ContentIndex.Sounds["select"].Play(); cursor++; }
+                if (GameInput.IsNewPress(NESInput.Up) && cursor > 13) { ContentIndex.Sounds["select"].Play(); cursor--; }
+                if (GameInput.IsNewPress(NESInput.A) && cursor == 13) { ContentIndex.Sounds["selectPlay"].Play(); paused = false; }
+                if (GameInput.IsNewPress(NESInput.A) && cursor == 14) { ContentIndex.Sounds["selectHit"].Play(); SceneManager.ChangeScene("MenuScene"); }
+                return;
+            }
             Flip = false;
             time += GlobalTime.ElapsedGameMilliseconds / 1000;
             if (time >= FLIP_TIME)
@@ -51,6 +63,8 @@ namespace NesJamGame.GameContent.Scenes
                 entities.RemoveAt(toRemove[i] - i);
             }
             toRemove = new List<int>();
+
+            if (GameInput.IsNewPress(NESInput.Start)) paused = true;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -58,6 +72,15 @@ namespace NesJamGame.GameContent.Scenes
             foreach(Entity entity in entities)
             {
                 entity.Draw(spriteBatch);
+            }
+
+            if (paused)
+            {
+                spriteBatch.Draw(ContentIndex.Pixel, new Rectangle(0, 0, 256, 240), null, Color.Black * 0.5f, 0f, Vector2.Zero, SpriteEffects.None, 0f);
+                TextRenderer.RenderText(spriteBatch, "PAUSED!", new Point(10, 10));
+                TextRenderer.RenderText(spriteBatch, "RESUME", new Point(10, 13));
+                TextRenderer.RenderText(spriteBatch, "EXIT", new Point(10, 14));
+                TextRenderer.RenderText(spriteBatch, ">", new Point(8, cursor));
             }
 
             //TextRenderer.RenderText(spriteBatch, "SCORE", new Point(0, 0));

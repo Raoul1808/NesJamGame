@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 
 namespace NesJamGame.Engine
@@ -35,6 +36,11 @@ namespace NesJamGame.Engine
         public static void ChangeScene(string name)
         {
             CurrentScene = name;
+        }
+
+        public static void RefreshScene(string name)
+        {
+            Scenes[name] = (IScene)Activator.CreateInstance(Scenes[name].GetType());
         }
 
         public static void UpdateScenes()
