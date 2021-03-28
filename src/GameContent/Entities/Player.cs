@@ -95,6 +95,7 @@ namespace NesJamGame.GameContent.Entities
                 shootDelay += time;
             if (particleDelay < PARTICLE_SPAWN_DELAY)
                 particleDelay += time;
+            base.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -139,11 +140,10 @@ namespace NesJamGame.GameContent.Entities
             {
                 if (((Bullet)entity).entity.GetType() != typeof(Player))
                 {
-                    ((Bullet)entity).entity.SendHit();
                     SendHit();
                 }
             }
-            else SendHit();
+            else if (entity.GetType() != typeof(Player)) SendHit();
         }
     }
 }

@@ -109,11 +109,6 @@ namespace NesJamGame.GameContent.Entities
                     SendHit();
                     ((Bullet)entity).SendHit();
                 }
-
-            if (entity.GetType() == typeof(Player))
-            {
-                entity.SendHit();
-            }
         }
     }
 }

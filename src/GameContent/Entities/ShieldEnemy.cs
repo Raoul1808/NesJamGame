@@ -23,6 +23,7 @@ namespace NesJamGame.GameContent.Entities
         int srcYPos;
         bool moving;
         bool shieldDown;
+        bool hitThisFrame = false;
 
         public ShieldEnemy(double appearTime, int yPos, int? xPos = null, bool moving = true, bool left = true)
         {
@@ -45,6 +46,7 @@ namespace NesJamGame.GameContent.Entities
 
         public override void Update()
         {
+            hitThisFrame = false;
             float time = (float)GlobalTime.ElapsedGameMilliseconds / 1000;
 
             if (progress < appearTime)
@@ -94,6 +96,8 @@ namespace NesJamGame.GameContent.Entities
 
         public override void SendHit()
         {
+            if (hitThisFrame) return;
+            hitThisFrame = true;
             ContentIndex.Sounds[$"hit{random.Next(1, 5)}"].Play();
             if (shieldDown) { canDispose = true; return; }
             shieldDown = true;
@@ -113,11 +117,6 @@ namespace NesJamGame.GameContent.Entities
                     SendHit();
                     ((Bullet)entity).SendHit();
                 }
-
-            if (entity.GetType() == typeof(Player))
-            {
-                entity.SendHit();
-            }
         }
     }
 }

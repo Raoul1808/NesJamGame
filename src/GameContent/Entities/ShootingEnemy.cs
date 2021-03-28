@@ -30,7 +30,7 @@ namespace NesJamGame.GameContent.Entities
         {
             sprite = new Sprite()
             {
-                texture = ContentIndex.Textures["Enemies/ClassicEnemy"],
+                texture = ContentIndex.Textures["Enemies/ShootingEnemy"],
                 rectangle = new Rectangle(0, 0, 16, 16),
             };
             random = new Random((int)(randomSeed*10000));
@@ -120,11 +120,6 @@ namespace NesJamGame.GameContent.Entities
                     SendHit();
                     ((Bullet)entity).SendHit();
                 }
-
-            if (entity.GetType() == typeof(Player))
-            {
-                entity.SendHit();
-            }
         }
     }
 }
