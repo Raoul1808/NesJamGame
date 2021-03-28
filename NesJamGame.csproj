@@ -95,6 +95,7 @@
     <Compile Include="src\Engine\IO\SaveManager.cs" />
     <Compile Include="src\Engine\IScene.cs" />
     <Compile Include="src\Engine\SceneManager.cs" />
+    <Compile Include="src\GameContent\EnemySpawner.cs" />
     <Compile Include="src\GameContent\Entities\Bullet.cs" />
     <Compile Include="src\GameContent\Entities\BulletPath.cs" />
     <Compile Include="src\GameContent\ContentIndex.cs" />
