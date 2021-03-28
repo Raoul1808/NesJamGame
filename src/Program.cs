@@ -86,6 +86,7 @@ namespace NesJamGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
             ContentIndex.LoadContent(Content, GraphicsDevice);
             SceneManager.Initialize();
+            SceneManager.AddScene("StartScene", new StartScene());
             SceneManager.AddScene("GameScene", new GameScene());
 
             TextRenderer.Initialize(ContentIndex.Textures["chars"], "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_!?><");
