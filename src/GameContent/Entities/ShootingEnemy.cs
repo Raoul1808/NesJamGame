@@ -11,8 +11,8 @@ namespace NesJamGame.GameContent.Entities
     public class ShootingEnemy : Entity
     {
         const float X_VELOCITY = 60f;
-        const float BULLET_VELOCITY = 30f;
-        const float SHOOT_TIME = 5;
+        const float BULLET_VELOCITY = 100f;
+        const float SHOOT_TIME = 3;
 
         Sprite sprite;
         Vector2 position;
@@ -26,14 +26,14 @@ namespace NesJamGame.GameContent.Entities
         bool moving;
         double shootTime;
 
-        public ShootingEnemy(double appearTime, int yPos, int? xPos = null, bool moving = true, bool left = true)
+        public ShootingEnemy(double randomSeed, double appearTime, int yPos, int? xPos = null, bool moving = true, bool left = true)
         {
             sprite = new Sprite()
             {
                 texture = ContentIndex.Textures["Enemies/ClassicEnemy"],
                 rectangle = new Rectangle(0, 0, 16, 16),
             };
-            random = new Random();
+            random = new Random((int)(randomSeed*10000));
             position = new Vector2((xPos == null ? random.Next(0, 30) : (int)xPos) * 8, -16);
             goingLeft = left;
             canDispose = false;
@@ -98,7 +98,7 @@ namespace NesJamGame.GameContent.Entities
 
         public override bool CanDispose()
         {
-            return canDispose;
+            return canDispose || position.Y > 256;
         }
 
         public override void SendHit()

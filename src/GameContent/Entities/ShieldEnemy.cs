@@ -89,7 +89,7 @@ namespace NesJamGame.GameContent.Entities
 
         public override bool CanDispose()
         {
-            return canDispose;
+            return canDispose || position.Y > 256;
         }
 
         public override void SendHit()
