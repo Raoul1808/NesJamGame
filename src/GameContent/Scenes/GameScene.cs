@@ -10,8 +10,12 @@ namespace NesJamGame.GameContent.Scenes
     public class GameScene : IScene
     {
         public static List<Entity> entities;
+        public static bool Flip;
         static List<Entity> toAdd;
         List<int> toRemove;
+
+        const double FLIP_TIME = 0.333333333333333333333;
+        double time;
 
         public GameScene()
         {
@@ -21,10 +25,20 @@ namespace NesJamGame.GameContent.Scenes
             toRemove = new List<int>();
 
             entities.Add(new ClassicEnemy(2, 2));
+            Flip = false;
+            time = 0;
         }
 
         public void Update()
         {
+            Flip = false;
+            time += GlobalTime.ElapsedGameMilliseconds / 1000;
+            if (time >= FLIP_TIME)
+            {
+                Flip = true;
+                time -= FLIP_TIME;
+            }
+
             entities.AddRange(toAdd);
             toAdd = new List<Entity>();
             for (int i = 0; i < entities.Count; i++)

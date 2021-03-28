@@ -10,14 +10,10 @@ namespace NesJamGame.GameContent.Entities
 {
     public class ClassicEnemy : Entity
     {
-        const float SHOT_SPEED = 2f;
         const float X_VELOCITY = 60f;
-        const float ENTER_TIME = 1;
-        const float FLIP_TIME = 0.333333f;
 
         Sprite sprite;
         Vector2 position;
-        double shootTime;
         bool goingLeft;
         bool canDispose;
         Random random;
@@ -25,9 +21,9 @@ namespace NesJamGame.GameContent.Entities
         double appearTime;
         int dstYPos;
         int srcYPos;
-        double flipTime;
+        bool moving;
 
-        public ClassicEnemy(double appearTime, int yPos, int? xPos = null, bool left = true)
+        public ClassicEnemy(double appearTime, int yPos, int? xPos = null, bool moving = true, bool left = true)
         {
             sprite = new Sprite()
             {
@@ -38,11 +34,11 @@ namespace NesJamGame.GameContent.Entities
             position = new Vector2((xPos == null ? random.Next(0, 30) : (int)xPos) * 8, -16);
             goingLeft = left;
             canDispose = false;
-            shootTime = 0;
             this.appearTime = appearTime;
             dstYPos = yPos * 8;
             srcYPos = (int)position.Y;
             progress = 0;
+            this.moving = moving;
         }
 
         public override void Update()
@@ -55,8 +51,11 @@ namespace NesJamGame.GameContent.Entities
                 progress += time;
             }
 
-            if (goingLeft) position.X -= X_VELOCITY * time;
-            else position.X += X_VELOCITY * time;
+            if (moving)
+            {
+                if (goingLeft) position.X -= X_VELOCITY * time;
+                else position.X += X_VELOCITY * time;
+            }
             if (position.X < 0)
             {
                 position.X = 0;
@@ -67,20 +66,11 @@ namespace NesJamGame.GameContent.Entities
                 position.X = 256 - sprite.rectangle.Width;
                 goingLeft = true;
             }
-            // FIXME: time-based randomness
-            if (shootTime >= (SHOT_SPEED - (random.NextDouble() + (random.Next(0, 2) - 1)/2)))
-            {
-                shootTime -= SHOT_SPEED;
-                if (progress/appearTime >= 1) GameScene.AddEntity(new Bullet(this, BulletPath.StraightDown, new Vector2(position.X + 7, position.Y + 10), 50f));
-            }
-            shootTime += time;
 
-            if (flipTime >= FLIP_TIME)
+            if (GameScene.Flip)
             {
                 sprite.flip = sprite.flip == SpriteEffects.None ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-                flipTime -= FLIP_TIME;
             }
-            flipTime += time;
 
             base.Update();
         }
@@ -118,6 +108,11 @@ namespace NesJamGame.GameContent.Entities
                     SendHit();
                     ((Bullet)entity).SendHit();
                 }
+
+            if (entity.GetType() == typeof(Player))
+            {
+                entity.SendHit();
+            }
         }
     }
 }
