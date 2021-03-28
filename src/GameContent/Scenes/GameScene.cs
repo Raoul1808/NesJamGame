@@ -118,7 +118,7 @@ namespace NesJamGame.GameContent.Scenes
                 if (e.GetType() == typeof(ClassicEnemy) || e.GetType() == typeof(ShieldEnemy) || e.GetType() == typeof(ShootingEnemy))
                 {
                     if (!GameOver) score++;
-                    currentSpawnLimit += 0.0002;
+                    currentSpawnLimit -= 0.0005;
                 }
                 entities.RemoveAt(toRemove[i] - i);
             }
@@ -187,11 +187,12 @@ namespace NesJamGame.GameContent.Scenes
 
             if (formationRate < MAX_FORMATION_RATE) formationRate += (formationRate > 10 ? 0.2 : 0.1) * time;
             if (formationRate > 10 && zoomingRate < MAX_ZOOMING_RATE) zoomingRate += 0.1 * time;
+            if (currentSpawnLimit > SPAWN_LIMIT_PER_SECOND_MAX) currentSpawnLimit -= 0.00075 * time;
             spawnTime += time;
             if (spawnTime > currentSpawnLimit)
             {
                 spawnTime -= currentSpawnLimit;
-                if (currentSpawnLimit > SPAWN_LIMIT_PER_SECOND_MAX) currentSpawnLimit -= 0.0001;
+                
                 double rng = random.NextDouble();
                 if (rng < formationRate)
                 {
