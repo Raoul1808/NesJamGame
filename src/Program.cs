@@ -76,6 +76,12 @@ namespace NesJamGame
             }
             UpdateCanvasScale(Convert.ToInt32(scale));
 
+            if (ConfigManager.GetValue("enable_sky") == null)
+            {
+                ConfigManager.SetValue("enable_sky", true.ToString());
+                ConfigManager.SaveJson();
+            }
+
             base.Initialize();
         }
 
@@ -101,7 +107,7 @@ namespace NesJamGame
             GlobalTime.Update(gameTime);
             SceneManager.UpdateScenes();
             ParticleManager.UpdateParticles();
-            sky.Update();
+            if (Convert.ToBoolean(ConfigManager.GetValue("enable_sky"))) sky.Update();
             base.Update(gameTime);
         }
 
@@ -110,7 +116,7 @@ namespace NesJamGame
             GraphicsDevice.SetRenderTarget(Canvas);
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone);
-            sky.Draw(spriteBatch);
+            if (Convert.ToBoolean(ConfigManager.GetValue("enable_sky"))) sky.Draw(spriteBatch);
             SceneManager.DrawScenes(spriteBatch);
             ParticleManager.DrawParticles(spriteBatch);
             spriteBatch.End();

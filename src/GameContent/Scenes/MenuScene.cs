@@ -2,7 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using NesJamGame.Engine;
 using NesJamGame.Engine.Graphics;
+using NesJamGame.Engine.IO;
 using NesJamGame.Engine.Utilities;
+using System;
 
 namespace NesJamGame.GameContent.Scenes
 {
@@ -40,12 +42,13 @@ namespace NesJamGame.GameContent.Scenes
                 up = !up;
                 time = 0;
             }
-            if (GameInput.IsNewPress(NESInput.Down) && cursor < 22) { cursor++; ContentIndex.Sounds["select"].Play(); }
+            if (GameInput.IsNewPress(NESInput.Down) && cursor < 23) { cursor++; ContentIndex.Sounds["select"].Play(); }
             if (GameInput.IsNewPress(NESInput.Up) && cursor > 20) { cursor--; ContentIndex.Sounds["select"].Play(); }
             if (GameInput.IsNewPress(NESInput.Left) && cursor == 21) { ChangeCanvasScale(true); ContentIndex.Sounds["selectHit"].Play(); }
             if (GameInput.IsNewPress(NESInput.Right) && cursor == 21) { ChangeCanvasScale(false); ContentIndex.Sounds["selectHit"].Play(); }
-            if (GameInput.IsNewPress(NESInput.A) && cursor == 22) { ContentIndex.Sounds["selectHit"].Play(); Program.Quit(); }
+            if (GameInput.IsNewPress(NESInput.A) && cursor == 23) { ContentIndex.Sounds["selectHit"].Play(); Program.Quit(); }
             if (GameInput.IsNewPress(NESInput.A) && cursor == 20) { ContentIndex.Sounds["selectPlay"].Play(); ContentIndex.Sounds["selectHit"].Play(); SceneManager.RefreshScene("GameScene"); GameScene.GameOver = false; SceneManager.ChangeScene("GameScene"); }
+            if (GameInput.IsNewPress(NESInput.A) && cursor == 22) { ContentIndex.Sounds["selectHit"].Play(); ConfigManager.SetValue("enable_sky", (!Convert.ToBoolean(ConfigManager.GetValue("enable_sky"))).ToString()); }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -53,7 +56,8 @@ namespace NesJamGame.GameContent.Scenes
             title.Draw(spriteBatch, new Point((int)position.X, (int)position.Y));
             TextRenderer.RenderText(spriteBatch, "PLAY", new Point(8, 20));
             TextRenderer.RenderText(spriteBatch, $"WINDOW SCALE  < {Program.CanvasScale} >", new Point(8, 21));
-            TextRenderer.RenderText(spriteBatch, "EXIT", new Point(8, 22));
+            TextRenderer.RenderText(spriteBatch, $"BACKGROUND "+ (Convert.ToBoolean(ConfigManager.GetValue("enable_sky")) ? "ON" : "OFF"), new Point(8, 22));
+            TextRenderer.RenderText(spriteBatch, "EXIT", new Point(8, 23));
             TextRenderer.RenderText(spriteBatch, ">", new Point(6, cursor));
         }
 
