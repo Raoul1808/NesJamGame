@@ -78,7 +78,7 @@ namespace NesJamGame.GameContent.Entities
             }
             if (particleDelay >= PARTICLE_SPAWN_DELAY)
             {
-                ParticleManager.CreateParticles(ContentIndex.Pixel, new Vector2(pos.X + random.Next(6, 10), pos.Y + 14), PARTICLE_AMOUNT, new Vector2(0, 1), spread:0.1f, minSpeed:10, maxSpeed:20, Color.CornflowerBlue, colorHueShift:1, 1);
+                ParticleManager.CreateParticles(ContentIndex.Pixel, new Vector2(pos.X + random.Next(6, 10), pos.Y + 14), PARTICLE_AMOUNT, new Vector2(0, 1), spread:0, minSpeed:10, maxSpeed:20, Color.CornflowerBlue, colorHueShift:1, 1);
                 particleDelay -= PARTICLE_SPAWN_DELAY;
             }
 
@@ -113,6 +113,7 @@ namespace NesJamGame.GameContent.Entities
 
         private void ShootBullet()
         {
+            ContentIndex.Sounds["shoot"].Play();
             shootDelay = 0;
             GameScene.AddEntity(new Bullet(this, BulletPath.StraightUp, new Vector2(pos.X + 4, pos.Y + 2), BULLET_SPEED));
             GameScene.AddEntity(new Bullet(this, BulletPath.StraightUp, new Vector2(pos.X + 10, pos.Y + 2), BULLET_SPEED));

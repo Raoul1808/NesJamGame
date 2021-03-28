@@ -34,7 +34,12 @@ namespace NesJamGame.GameContent
                 "splash",
                 "select",
                 "selectHit",
-                "selectPlay"
+                "selectPlay",
+                "shoot",
+                "hit1",
+                "hit2",
+                "hit3",
+                "hit4",
             };
 
             Textures = new Dictionary<string, Texture2D>();
