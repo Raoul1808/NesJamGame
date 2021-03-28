@@ -45,7 +45,7 @@ namespace NesJamGame.GameContent.Scenes
             if (GameInput.IsNewPress(NESInput.Left) && cursor == 21) { ChangeCanvasScale(true); ContentIndex.Sounds["selectHit"].Play(); }
             if (GameInput.IsNewPress(NESInput.Right) && cursor == 21) { ChangeCanvasScale(false); ContentIndex.Sounds["selectHit"].Play(); }
             if (GameInput.IsNewPress(NESInput.A) && cursor == 22) { ContentIndex.Sounds["selectHit"].Play(); Program.Quit(); }
-            if (GameInput.IsNewPress(NESInput.A) && cursor == 20) { ContentIndex.Sounds["selectPlay"].Play(); ContentIndex.Sounds["selectHit"].Play(); SceneManager.RefreshScene("GameScene"); SceneManager.ChangeScene("GameScene"); }
+            if (GameInput.IsNewPress(NESInput.A) && cursor == 20) { ContentIndex.Sounds["selectPlay"].Play(); ContentIndex.Sounds["selectHit"].Play(); SceneManager.RefreshScene("GameScene"); GameScene.GameOver = false; SceneManager.ChangeScene("GameScene"); }
         }
 
         public void Draw(SpriteBatch spriteBatch)

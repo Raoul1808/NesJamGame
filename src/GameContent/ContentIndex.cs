@@ -40,6 +40,9 @@ namespace NesJamGame.GameContent
                 "hit2",
                 "hit3",
                 "hit4",
+                "death1",
+                "death2",
+                "death3",
             };
 
             Textures = new Dictionary<string, Texture2D>();

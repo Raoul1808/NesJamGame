@@ -22,10 +22,11 @@ namespace NesJamGame.GameContent.Scenes
 
         bool paused = false;
         int cursor;
-        static bool gameOver = false;
+        public static bool GameOver = false;
 
         public GameScene()
         {
+            EnemySpawner.Initialize();
             entities = new List<Entity>();
             toAdd = new List<Entity>();
             entities.Add(new Player(15, 25));
@@ -45,11 +46,11 @@ namespace NesJamGame.GameContent.Scenes
 
         public void Update()
         {
-            if (gameOver)
+            if (GameOver)
             {
                 if (GameInput.IsNewPress(NESInput.A)) { SceneManager.ChangeScene("MenuScene"); }
             }
-            if (paused && !gameOver)
+            if (paused && !GameOver)
             {
                 if (GameInput.IsNewPress(NESInput.Down) && cursor < 14) { ContentIndex.Sounds["select"].Play(); cursor++; }
                 if (GameInput.IsNewPress(NESInput.Up) && cursor > 13) { ContentIndex.Sounds["select"].Play(); cursor--; }
@@ -97,7 +98,7 @@ namespace NesJamGame.GameContent.Scenes
                 TextRenderer.RenderText(spriteBatch, ">", new Point(8, cursor));
             }
 
-            if (gameOver)
+            if (GameOver)
             {
 
             }
@@ -111,11 +112,6 @@ namespace NesJamGame.GameContent.Scenes
         public static void AddEntity(Entity entity)
         {
             toAdd.Add(entity);
-        }
-
-        public static void TriggerGameOver()
-        {
-            gameOver = true;
         }
     }
 }

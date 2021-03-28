@@ -122,7 +122,9 @@ namespace NesJamGame.GameContent.Entities
 
         public override void SendHit()
         {
-            GameScene.TriggerGameOver();
+            if (canDispose) return;
+            ContentIndex.Sounds[$"death{random.Next(1, 4)}"].Play();
+            GameScene.GameOver = true;
             canDispose = true;
         }
 
