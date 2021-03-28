@@ -93,15 +93,29 @@ namespace NesJamGame.GameContent
                     " c c ",
                     "c   c"
                 },
+                new string[]
+                {
+                    "CCC",
+                    "CGG",
+                    "CCC",
+                    "C C"
+                }
             };
         }
 
-        public static void SpawnFormation(Point location, int? formationNum = null)
+        public static void SpawnFormation(Point? pos = null, int? formationNum = null)
         {
             if (formationNum == null)
             {
                 formationNum = random.Next(0, formations.Count);
             }
+
+            Point location;
+            if (pos == null)
+            {
+                location = new Point(random.Next(0, 32 - (formations[(int)formationNum][0].Length)*2), random.Next(0, 5));
+            }
+            else location = (Point)pos;
 
             for (int j = 0; j < formations[(int)formationNum].Length; j++)
             {

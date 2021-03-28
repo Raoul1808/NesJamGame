@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using NesJamGame.Engine;
 using NesJamGame.Engine.Graphics;
 using NesJamGame.Engine.IO;
-using NesJamGame.Engine.Utilities;
 using NesJamGame.GameContent.Entities;
 using System;
 using System.Collections.Generic;
@@ -29,6 +28,16 @@ namespace NesJamGame.GameContent.Scenes
         int cursor;
         public static bool GameOver = false;
 
+        // Spawning logic code stuff
+        const double MAX_FORMATION_RATE = 0.333333333333;
+        const double MAX_ZOOMING_RATE = 0.333333333333;
+        const double SPAWN_LIMIT_PER_SECOND_MAX = 0.1;
+        double currentSpawnLimit;
+        double formationRate;
+        double zoomingRate;
+        double spawnTime;
+        Random random;
+
         public GameScene()
         {
             EnemySpawner.Initialize();
@@ -48,6 +57,12 @@ namespace NesJamGame.GameContent.Scenes
                 rectangle = new Rectangle(70, 30, 104, 62),
             };
             score = 0;
+
+            random = new Random();
+            formationRate = 0;
+            zoomingRate = 0;
+            currentSpawnLimit = 1;
+            spawnTime = 0;
         }
 
         public void Update()
@@ -69,6 +84,7 @@ namespace NesJamGame.GameContent.Scenes
                     {
                         highscoreText = "HIGHSCORE - " + highscore.ToString();
                     }
+                    triggerOnce = true;
                 }
                 if (GameInput.IsNewPress(NESInput.A)) { SceneManager.ChangeScene("MenuScene"); }
             }
@@ -86,6 +102,8 @@ namespace NesJamGame.GameContent.Scenes
                 Flip = true;
                 time -= FLIP_TIME;
             }
+
+            if (entities.Count < 500) TrySpawnEnemies();
 
             entities.AddRange(toAdd);
             toAdd = new List<Entity>();
@@ -128,16 +146,55 @@ namespace NesJamGame.GameContent.Scenes
                 TextRenderer.RenderText(spriteBatch, highscoreText, new Point(x, 16));
                 TextRenderer.RenderText(spriteBatch, "> MAIN MENU", new Point(8, 19));
             }
-
-            //TextRenderer.RenderText(spriteBatch, "SCORE", new Point(0, 0));
-            //TextRenderer.RenderText(spriteBatch, "00000000", new Point(0, 1));
-            //TextRenderer.RenderText(spriteBatch, "HI-SCORE", new Point(24, 0));
-            //TextRenderer.RenderText(spriteBatch, "00000000", new Point(24, 1));
         }
 
         public static void AddEntity(Entity entity)
         {
             toAdd.Add(entity);
+        }
+
+        private void TrySpawnEnemies()
+        {
+            // Spawning logic:
+            // The game should start out pretty slow with random enemies coming from above and few formations making up.
+            // Then the game will start spamming shooting enemies protected by shielded enemies.
+            // Shooting enemies should shoot a bit faster over time.
+            // At some point, enemies that go accross the screen should start appearing. The player should avoid those.
+            // Finally, have a hard enemy cap otherwise the game will lag from too many enemies and bullets.
+            //
+            // Math spawning logic:
+            // --------------------
+            // Game start:
+            // Zooming Enemies rate: 0%
+            // Formation rate: 0.1%
+            // --------------------
+            // Rate increase:
+            // Formation rate: 0.1% per second, 0.2% when above 10%, caps at 33%
+            // Zooming Enemies rate: 0% per second, 0.1% when formation rate is at 10%, caps at 33%
+
+            double time = GlobalTime.ElapsedGameMilliseconds / 1000;
+
+            if (formationRate < MAX_FORMATION_RATE) formationRate += (formationRate > 10 ? 0.2 : 0.1) * time;
+            if (formationRate > 10 && zoomingRate < MAX_ZOOMING_RATE) zoomingRate += 0.1 * time;
+            spawnTime += time;
+            if (spawnTime > currentSpawnLimit)
+            {
+                spawnTime -= currentSpawnLimit;
+                if (currentSpawnLimit > SPAWN_LIMIT_PER_SECOND_MAX) currentSpawnLimit -= 0.0001;
+                double rng = random.NextDouble();
+                if (rng < formationRate)
+                {
+                    EnemySpawner.SpawnFormation();
+                }
+                else if (rng > (1-zoomingRate))
+                {
+                    EnemySpawner.SpawnZooming(random.Next(0, 32), 100/score);
+                }
+                else
+                {
+                    EnemySpawner.SpawnNonSpecial(random.Next(0, 8), random.Next(0, 3));
+                }
+            }
         }
     }
 }
