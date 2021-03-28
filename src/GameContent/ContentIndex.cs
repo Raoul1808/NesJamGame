@@ -31,7 +31,10 @@ namespace NesJamGame.GameContent
 
             soundNames = new List<string>()
             {
-                "splash"
+                "splash",
+                "select",
+                "selectHit",
+                "selectPlay"
             };
 
             Textures = new Dictionary<string, Texture2D>();

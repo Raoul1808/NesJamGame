@@ -48,7 +48,11 @@ namespace NesJamGame
         RenderTarget2D Canvas;
         SkyBackground sky;
 
+        static bool stop = false;
+
         public static int CanvasScale { get; private set; }
+        public static int ScreenWidth { get { return GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width; } }
+        public static int ScreenHeight { get { return GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height; } }
 
         public Program()
         {
@@ -87,6 +91,7 @@ namespace NesJamGame
             ContentIndex.LoadContent(Content, GraphicsDevice);
             SceneManager.Initialize();
             SceneManager.AddScene("StartScene", new StartScene());
+            SceneManager.AddScene("MenuScene", new MenuScene());
             SceneManager.AddScene("GameScene", new GameScene());
 
             TextRenderer.Initialize(ContentIndex.Textures["chars"], "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_!?><");
@@ -97,6 +102,7 @@ namespace NesJamGame
 
         protected override void Update(GameTime gameTime)
         {
+            if (stop) Exit();
             InputManager.Update(CanvasScale);
             GlobalTime.Update(gameTime);
             SceneManager.UpdateScenes();
@@ -130,6 +136,12 @@ namespace NesJamGame
             graphics.PreferredBackBufferWidth = 256 * CanvasScale;
             graphics.PreferredBackBufferHeight = 240 * CanvasScale;
             graphics.ApplyChanges();
+            ConfigManager.SetValue("canvas_scale", CanvasScale.ToString());
+        }
+
+        public static void Quit()
+        {
+            stop = true;
         }
     }
 }

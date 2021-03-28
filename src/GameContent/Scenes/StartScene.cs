@@ -27,7 +27,7 @@ namespace NesJamGame.GameContent.Scenes
             }
             if (time >= 2.5)
             {
-                SceneManager.ChangeScene("GameScene");
+                SceneManager.ChangeScene("MenuScene");
             }
         }
 

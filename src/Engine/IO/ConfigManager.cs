@@ -30,6 +30,7 @@ namespace NesJamGame.Engine.IO
 
         public static void SetValue(string key, string value)
         {
+            if (config == null) return;
             if (config.ContainsKey(key))
             {
                 config[key] = value;
