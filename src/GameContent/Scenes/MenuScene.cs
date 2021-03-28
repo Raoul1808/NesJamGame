@@ -59,6 +59,7 @@ namespace NesJamGame.GameContent.Scenes
             TextRenderer.RenderText(spriteBatch, $"BACKGROUND "+ (Convert.ToBoolean(ConfigManager.GetValue("enable_sky")) ? "ON" : "OFF"), new Point(8, 22));
             TextRenderer.RenderText(spriteBatch, "EXIT", new Point(8, 23));
             TextRenderer.RenderText(spriteBatch, ">", new Point(6, cursor));
+            TextRenderer.RenderText(spriteBatch, "HIGHSCORE - " + SaveManager.GetValue("highscore"), new Point(2, 2));
         }
 
         void ChangeCanvasScale(bool minus)
