@@ -2,8 +2,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using NesJamGame.Engine;
 using NesJamGame.Engine.Graphics;
+using NesJamGame.Engine.IO;
 using NesJamGame.Engine.Utilities;
 using NesJamGame.GameContent.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace NesJamGame.GameContent.Scenes
@@ -15,7 +17,10 @@ namespace NesJamGame.GameContent.Scenes
         static List<Entity> toAdd;
         List<int> toRemove;
         Sprite goSpr;
-        Vector2 goPos;
+        bool triggerOnce = false;
+        int score;
+        string highscoreText = "";
+        int x = 5;
 
         const double FLIP_TIME = 0.333333333333333333333;
         double time;
@@ -40,14 +45,31 @@ namespace NesJamGame.GameContent.Scenes
             goSpr = new Sprite()
             {
                 texture = ContentIndex.Textures["GameOver"],
-                rectangle = new Rectangle(0, 0, 104, 62),
+                rectangle = new Rectangle(70, 30, 104, 62),
             };
+            score = 0;
         }
 
         public void Update()
         {
+            time += GlobalTime.ElapsedGameMilliseconds / 1000;
             if (GameOver)
             {
+                if (!triggerOnce)
+                {
+                    int highscore = Convert.ToInt32(SaveManager.GetValue("highscore"));
+                    if (score > highscore)
+                    {
+                        highscoreText = "NEW HIGHSCORE!";
+                        SaveManager.SetValue("highscore", score.ToString());
+                        SaveManager.SaveJson();
+                        x = 9;
+                    }
+                    else
+                    {
+                        highscoreText = "HIGHSCORE - " + highscore.ToString();
+                    }
+                }
                 if (GameInput.IsNewPress(NESInput.A)) { SceneManager.ChangeScene("MenuScene"); }
             }
             if (paused && !GameOver)
@@ -59,7 +81,6 @@ namespace NesJamGame.GameContent.Scenes
                 return;
             }
             Flip = false;
-            time += GlobalTime.ElapsedGameMilliseconds / 1000;
             if (time >= FLIP_TIME)
             {
                 Flip = true;
@@ -75,6 +96,8 @@ namespace NesJamGame.GameContent.Scenes
             }
             for (int i = 0; i < toRemove.Count; i++)
             {
+                Entity e = entities[toRemove[i] - i];
+                if (e.GetType() == typeof(ClassicEnemy) || e.GetType() == typeof(ShieldEnemy) || e.GetType() == typeof(ShootingEnemy)) score++;
                 entities.RemoveAt(toRemove[i] - i);
             }
             toRemove = new List<int>();
@@ -100,7 +123,10 @@ namespace NesJamGame.GameContent.Scenes
 
             if (GameOver)
             {
-
+                goSpr.Draw(spriteBatch);
+                TextRenderer.RenderText(spriteBatch, "SCORE - " + score.ToString(), new Point(9, 15));
+                TextRenderer.RenderText(spriteBatch, highscoreText, new Point(x, 16));
+                TextRenderer.RenderText(spriteBatch, "> MAIN MENU", new Point(8, 19));
             }
 
             //TextRenderer.RenderText(spriteBatch, "SCORE", new Point(0, 0));
