@@ -78,7 +78,7 @@ namespace NesJamGame.GameContent.Entities
             }
             if (particleDelay >= PARTICLE_SPAWN_DELAY)
             {
-                ParticleManager.CreateParticles(ContentIndex.Pixel, new Vector2(pos.X + random.Next(6, 9), pos.Y + 15), PARTICLE_AMOUNT, new Vector2(0, 1), spread:1, minSpeed:10, maxSpeed:20, Color.CornflowerBlue, colorHueShift:1, 1);
+                ParticleManager.CreateParticles(ContentIndex.Pixel, new Vector2(pos.X + random.Next(6, 10), pos.Y + 14), PARTICLE_AMOUNT, new Vector2(0, 1), spread:0.1f, minSpeed:10, maxSpeed:20, Color.CornflowerBlue, colorHueShift:1, 1);
                 particleDelay -= PARTICLE_SPAWN_DELAY;
             }
 
@@ -125,7 +125,7 @@ namespace NesJamGame.GameContent.Entities
 
         public override Rectangle GetBbox()
         {
-            return new Rectangle((int)pos.X, (int)pos.Y, sprite.rectangle.Width, sprite.rectangle.Height);
+            return new Rectangle((int)pos.X + 1, (int)pos.Y + 1, sprite.rectangle.Width - 2, sprite.rectangle.Height - 2);
         }
 
         public override void OnEntityCollision(Entity entity)
