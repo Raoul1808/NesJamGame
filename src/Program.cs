@@ -76,12 +76,6 @@ namespace NesJamGame
             }
             UpdateCanvasScale(Convert.ToInt32(scale));
 
-            if (ConfigManager.GetValue("window_shake") == null)
-            {
-                ConfigManager.SetValue("window_shake", "true");
-                ConfigManager.SaveJson();
-            }
-
             base.Initialize();
         }
 

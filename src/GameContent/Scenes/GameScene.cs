@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using NesJamGame.Engine;
 using NesJamGame.Engine.Graphics;
+using NesJamGame.Engine.Utilities;
 using NesJamGame.GameContent.Entities;
 using System.Collections.Generic;
 
@@ -13,12 +14,15 @@ namespace NesJamGame.GameContent.Scenes
         public static bool Flip;
         static List<Entity> toAdd;
         List<int> toRemove;
+        Sprite goSpr;
+        Vector2 goPos;
 
         const double FLIP_TIME = 0.333333333333333333333;
         double time;
 
         bool paused = false;
         int cursor;
+        static bool gameOver = false;
 
         public GameScene()
         {
@@ -31,11 +35,21 @@ namespace NesJamGame.GameContent.Scenes
             Flip = false;
             time = 0;
             cursor = 13;
+
+            goSpr = new Sprite()
+            {
+                texture = ContentIndex.Textures["GameOver"],
+                rectangle = new Rectangle(0, 0, 104, 62),
+            };
         }
 
         public void Update()
         {
-            if (paused)
+            if (gameOver)
+            {
+                if (GameInput.IsNewPress(NESInput.A)) { SceneManager.ChangeScene("MenuScene"); }
+            }
+            if (paused && !gameOver)
             {
                 if (GameInput.IsNewPress(NESInput.Down) && cursor < 14) { ContentIndex.Sounds["select"].Play(); cursor++; }
                 if (GameInput.IsNewPress(NESInput.Up) && cursor > 13) { ContentIndex.Sounds["select"].Play(); cursor--; }
@@ -77,10 +91,15 @@ namespace NesJamGame.GameContent.Scenes
             if (paused)
             {
                 spriteBatch.Draw(ContentIndex.Pixel, new Rectangle(0, 0, 256, 240), null, Color.Black * 0.5f, 0f, Vector2.Zero, SpriteEffects.None, 0f);
-                TextRenderer.RenderText(spriteBatch, "PAUSED!", new Point(10, 10));
+                TextRenderer.RenderText(spriteBatch, "PAUSED!", new Point(12, 10));
                 TextRenderer.RenderText(spriteBatch, "RESUME", new Point(10, 13));
-                TextRenderer.RenderText(spriteBatch, "EXIT", new Point(10, 14));
+                TextRenderer.RenderText(spriteBatch, "MAIN MENU", new Point(10, 14));
                 TextRenderer.RenderText(spriteBatch, ">", new Point(8, cursor));
+            }
+
+            if (gameOver)
+            {
+
             }
 
             //TextRenderer.RenderText(spriteBatch, "SCORE", new Point(0, 0));
@@ -92,6 +111,11 @@ namespace NesJamGame.GameContent.Scenes
         public static void AddEntity(Entity entity)
         {
             toAdd.Add(entity);
+        }
+
+        public static void TriggerGameOver()
+        {
+            gameOver = true;
         }
     }
 }

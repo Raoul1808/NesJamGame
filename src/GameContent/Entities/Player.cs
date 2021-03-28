@@ -32,6 +32,8 @@ namespace NesJamGame.GameContent.Entities
 
         Random random;
 
+        bool canDispose = false;
+
         public Player(int x, int y)
         {
             sprite = new Sprite()
@@ -107,9 +109,8 @@ namespace NesJamGame.GameContent.Entities
 
         public override bool CanDispose()
         {
-            return false;
+            return canDispose;
         }
-
 
         private void ShootBullet()
         {
@@ -121,7 +122,8 @@ namespace NesJamGame.GameContent.Entities
 
         public override void SendHit()
         {
-
+            GameScene.TriggerGameOver();
+            canDispose = true;
         }
 
         public override Rectangle GetBbox()
