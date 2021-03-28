@@ -21,6 +21,8 @@ namespace NesJamGame.GameContent
                 "chars",
                 "DevBullet",
                 "PlayerShip",
+                "GameOver",
+                "SpaceExplorer",
                 "Enemies/ClassicEnemy",
                 "Enemies/ShieldEnemy",
                 "Enemies/ShieldEnemyNoShield",
