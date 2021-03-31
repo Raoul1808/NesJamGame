@@ -103,7 +103,7 @@ namespace NesJamGame.GameContent.Scenes
                 time -= FLIP_TIME;
             }
 
-            if (entities.Count < 500) TrySpawnEnemies();
+            if (entities.Count < 200) TrySpawnEnemies();
 
             entities.AddRange(toAdd);
             toAdd = new List<Entity>();
@@ -118,7 +118,7 @@ namespace NesJamGame.GameContent.Scenes
                 if (e.GetType() == typeof(ClassicEnemy) || e.GetType() == typeof(ShieldEnemy) || e.GetType() == typeof(ShootingEnemy))
                 {
                     if (!GameOver) score++;
-                    currentSpawnLimit -= 0.0005;
+                    currentSpawnLimit -= 0.00075;
                 }
                 entities.RemoveAt(toRemove[i] - i);
             }
@@ -185,9 +185,9 @@ namespace NesJamGame.GameContent.Scenes
 
             double time = GlobalTime.ElapsedGameMilliseconds / 1000;
 
-            if (formationRate < MAX_FORMATION_RATE) formationRate += (formationRate > 10 ? 0.2 : 0.1) * time;
-            if (formationRate > 10 && zoomingRate < MAX_ZOOMING_RATE) zoomingRate += 0.1 * time;
-            if (currentSpawnLimit > SPAWN_LIMIT_PER_SECOND_MAX) currentSpawnLimit -= 0.00075 * time;
+            if (formationRate < MAX_FORMATION_RATE) formationRate += (formationRate > 10 ? 0.25 : 0.15) * time;
+            if (formationRate > 0.1 && zoomingRate < MAX_ZOOMING_RATE) zoomingRate += 0.1 * time;
+            if (currentSpawnLimit > SPAWN_LIMIT_PER_SECOND_MAX) currentSpawnLimit -= 0.0005 * time;
             spawnTime += time;
             if (spawnTime > currentSpawnLimit)
             {
