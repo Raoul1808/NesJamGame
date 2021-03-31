@@ -185,8 +185,8 @@ namespace NesJamGame.GameContent.Scenes
 
             double time = GlobalTime.ElapsedGameMilliseconds / 1000;
 
-            if (formationRate < MAX_FORMATION_RATE) formationRate += (formationRate > 10 ? 0.25 : 0.15) * time;
-            if (formationRate > 0.1 && zoomingRate < MAX_ZOOMING_RATE) zoomingRate += 0.1 * time;
+            if (formationRate < MAX_FORMATION_RATE) formationRate += (formationRate > 10 ? 0.0025 : 0.0015) * time;
+            if (formationRate > 0.1 && zoomingRate < MAX_ZOOMING_RATE) zoomingRate += 0.001 * time;
             if (currentSpawnLimit > SPAWN_LIMIT_PER_SECOND_MAX) currentSpawnLimit -= 0.0005 * time;
             spawnTime += time;
             if (spawnTime > currentSpawnLimit)
