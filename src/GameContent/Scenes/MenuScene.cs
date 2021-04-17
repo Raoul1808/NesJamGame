@@ -96,6 +96,7 @@ namespace NesJamGame.GameContent.Scenes
             }
             if (GameInput.IsNewPress(NESInput.A) && cursor == 21)
             {
+                ContentIndex.Sounds["selectHit"].Play();
                 isOptionMenu = true;
                 cursor = 21;
             }
@@ -130,6 +131,7 @@ namespace NesJamGame.GameContent.Scenes
             }
             if (GameInput.IsNewPress(NESInput.Left) && cursor == 23)
             {
+                ContentIndex.Sounds["selectHit"].Play();
                 if (!speedAlertShown)
                 {
                     Program.ShowSpeedAlert();
@@ -142,6 +144,7 @@ namespace NesJamGame.GameContent.Scenes
             }
             if (GameInput.IsNewPress(NESInput.Right) && cursor == 23)
             {
+                ContentIndex.Sounds["selectHit"].Play();
                 if (!speedAlertShown)
                 {
                     Program.ShowSpeedAlert();
@@ -154,6 +157,7 @@ namespace NesJamGame.GameContent.Scenes
             }
             if (GameInput.IsNewPress(NESInput.A) && cursor == 24)
             {
+                ContentIndex.Sounds["selectHit"].Play();
                 isOptionMenu = false;
                 cursor = 21;
             }
