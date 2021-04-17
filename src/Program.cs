@@ -17,7 +17,7 @@ namespace NesJamGame
     {
         static void Main(string[] args)
         {
-            Game game = new Program();
+            game = new Program();
 
             var gamePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             Directory.CreateDirectory(Path.Combine(gamePath, "SaveData"));
@@ -50,9 +50,11 @@ namespace NesJamGame
 
         static bool stop = false;
 
+        static Game game;
         public static int CanvasScale { get; private set; }
         public static int ScreenWidth { get { return GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width; } }
         public static int ScreenHeight { get { return GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height; } }
+        public static double GameSpeed = 1;
 
         public Program()
         {
@@ -111,6 +113,7 @@ namespace NesJamGame
             if (stop) Exit();
             InputManager.Update(CanvasScale);
             GlobalTime.Update(gameTime);
+            GlobalTime.ChangeSpeed(GameSpeed);
             SceneManager.UpdateScenes();
             ParticleManager.UpdateParticles();
             if (Convert.ToBoolean(ConfigManager.GetValue("enable_sky"))) sky.Update();
@@ -148,6 +151,11 @@ namespace NesJamGame
         public static void Quit()
         {
             stop = true;
+        }
+
+        public static void ShowSpeedAlert()
+        {
+            SDL.SDL_ShowSimpleMessageBox(SDL.SDL_MessageBoxFlags.SDL_MESSAGEBOX_WARNING, "HOLD ON A SECOND!", "You are about to change the in-game speed. This feature can break the game in some ways. Use at your own risk!\nGame Speed resets back to default value (10) when starting the game.", game.Window.Handle);
         }
     }
 }
