@@ -70,7 +70,7 @@ namespace NesJamGame
             GlobalTime.Initialize();
 
             string scale = ConfigManager.GetValue("canvas_scale");
-            if (scale == null)
+            if (scale == null || Convert.ToInt32(scale) < 2 || !int.TryParse(scale, out _))
             {
                 ConfigManager.SetValue("canvas_scale", "2");
                 ConfigManager.SaveJson();
@@ -83,8 +83,18 @@ namespace NesJamGame
                 ConfigManager.SetValue("enable_sky", true.ToString());
                 ConfigManager.SaveJson();
             }
+            else if (!bool.TryParse(ConfigManager.GetValue("enable_sky"), out _))
+            {
+                ConfigManager.SetValue("enable_sky", true.ToString());
+                ConfigManager.SaveJson();
+            }
 
             if (SaveManager.GetValue("highscore") == null)
+            {
+                SaveManager.SetValue("highscore", "0");
+                SaveManager.SaveJson();
+            }
+            else if (!int.TryParse(SaveManager.GetValue("highscore"), out _))
             {
                 SaveManager.SetValue("highscore", "0");
                 SaveManager.SaveJson();
@@ -155,7 +165,7 @@ namespace NesJamGame
 
         public static void ShowSpeedAlert()
         {
-            SDL.SDL_ShowSimpleMessageBox(SDL.SDL_MessageBoxFlags.SDL_MESSAGEBOX_WARNING, "HOLD ON A SECOND!", "You are about to change the in-game speed. This feature can break the game in some ways. Use at your own risk!\nGame Speed resets back to default value (10) when starting the game.", game.Window.Handle);
+            SDL.SDL_ShowSimpleMessageBox(SDL.SDL_MessageBoxFlags.SDL_MESSAGEBOX_WARNING, "HOLD ON A SECOND!", "You are about to change the in-game speed. This feature can break the game in some ways. Use at your own risk!\nGame Speed resets back to default value (10) when starting the game.\nPlease do not report bugs that occur with a non-standard game speed!", game.Window.Handle);
         }
     }
 }
