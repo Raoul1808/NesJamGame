@@ -92,7 +92,7 @@ namespace NesJamGame.GameContent.Entities
 
         public override void SendHit()
         {
-            AudioPlayer.PlayAudio($"hit{random.Next(1, 5)}");
+            AudioPlayer.PlayAudio($"hit{random.Next(1, 5)}", 0f, (float)((2 * (position.X + sprite.rectangle.Width / 2) / 256) - 1));
             canDispose = true;
         }
 

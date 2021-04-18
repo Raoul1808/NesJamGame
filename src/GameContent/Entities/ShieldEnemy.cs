@@ -98,7 +98,7 @@ namespace NesJamGame.GameContent.Entities
         {
             if (hitThisFrame) return;
             hitThisFrame = true;
-            AudioPlayer.PlayAudio($"hit{random.Next(1, 5)}");
+            AudioPlayer.PlayAudio($"hit{random.Next(1, 5)}", 0f, (float)((2 * (position.X + sprite.rectangle.Width / 2) / 256) - 1));
             if (shieldDown) { canDispose = true; return; }
             shieldDown = true;
             sprite.texture = ContentIndex.Textures["Enemies/ShieldEnemyNoShield"];

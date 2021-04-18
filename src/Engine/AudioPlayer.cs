@@ -21,5 +21,10 @@ namespace NesJamGame.Engine
         {
             ContentIndex.Sounds[sound].Play((float)volume, 0f, 0f);
         }
+
+        public static void PlayAudio(string sound, float pitch, float pan)
+        {
+            ContentIndex.Sounds[sound].Play((float)volume, pitch, pan);
+        }
     }
 }

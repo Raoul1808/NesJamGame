@@ -117,22 +117,22 @@ namespace NesJamGame.GameContent.Scenes
             if (GameInput.IsNewPress(NESInput.Left) && cursor == 21)
             {
                 if (AudioPlayer.Volume > 0) AudioPlayer.Volume--;
-                AudioPlayer.PlayAudio("selectHit");
+                AudioPlayer.PlayAudio("selectHit", 0f, -0.5f);
             }
             if (GameInput.IsNewPress(NESInput.Right) && cursor == 21)
             {
                 if (AudioPlayer.Volume < 10) AudioPlayer.Volume++;
-                AudioPlayer.PlayAudio("selectHit");
+                AudioPlayer.PlayAudio("selectHit", 0f, 0.5f);
             }
             if (GameInput.IsNewPress(NESInput.Left) && cursor == 22)
             {
                 ChangeCanvasScale(true);
-                AudioPlayer.PlayAudio("selectHit");
+                AudioPlayer.PlayAudio("selectHit", 0f, -0.5f);
             }
             if (GameInput.IsNewPress(NESInput.Right) && cursor == 22)
             {
                 ChangeCanvasScale(false);
-                AudioPlayer.PlayAudio("selectHit");
+                AudioPlayer.PlayAudio("selectHit", 0f, 0.5f);
             }
             if (GameInput.IsNewPress(NESInput.A) && cursor == 23)
             {
@@ -141,7 +141,7 @@ namespace NesJamGame.GameContent.Scenes
             }
             if (GameInput.IsNewPress(NESInput.Left) && cursor == 24)
             {
-                AudioPlayer.PlayAudio("selectHit");
+                AudioPlayer.PlayAudio("selectHit", 0f, -0.5f);
                 if (!speedAlertShown)
                 {
                     Program.ShowSpeedAlert();
@@ -154,7 +154,7 @@ namespace NesJamGame.GameContent.Scenes
             }
             if (GameInput.IsNewPress(NESInput.Right) && cursor == 24)
             {
-                AudioPlayer.PlayAudio("selectHit");
+                AudioPlayer.PlayAudio("selectHit", 0f, 0.5f);
                 if (!speedAlertShown)
                 {
                     Program.ShowSpeedAlert();
