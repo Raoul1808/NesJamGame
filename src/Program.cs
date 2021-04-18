@@ -62,6 +62,7 @@ namespace NesJamGame
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             UpdateCanvasScale(3);
+            Window.Title = "Space Explorer";
         }
 
         protected override void Initialize()
