@@ -116,12 +116,12 @@ namespace NesJamGame.GameContent.Scenes
             }
             if (GameInput.IsNewPress(NESInput.Left) && cursor == 21)
             {
-                if (AudioPlayer.Volume > 0) AudioPlayer.Volume--;
+                if (AudioPlayer.Volume > 0) ConfigManager.SetValue("audio_volume", (--AudioPlayer.Volume).ToString());
                 AudioPlayer.PlayAudio("selectHit", 0f, -0.5f);
             }
             if (GameInput.IsNewPress(NESInput.Right) && cursor == 21)
             {
-                if (AudioPlayer.Volume < 10) AudioPlayer.Volume++;
+                if (AudioPlayer.Volume < 10) ConfigManager.SetValue("audio_volume", (++AudioPlayer.Volume).ToString());
                 AudioPlayer.PlayAudio("selectHit", 0f, 0.5f);
             }
             if (GameInput.IsNewPress(NESInput.Left) && cursor == 22)
@@ -162,7 +162,7 @@ namespace NesJamGame.GameContent.Scenes
                 }
                 else
                 {
-                    if (Program.GameSpeed < 2) Program.GameSpeed += 0.1;
+                    if (Program.GameSpeed < 4) Program.GameSpeed += 0.1;
                 }
             }
             if ((GameInput.IsNewPress(NESInput.A) && cursor == 25) || GameInput.IsNewPress(NESInput.B))
