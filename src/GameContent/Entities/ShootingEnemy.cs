@@ -103,7 +103,7 @@ namespace NesJamGame.GameContent.Entities
 
         public override void SendHit()
         {
-            ContentIndex.Sounds[$"hit{random.Next(1, 5)}"].Play();
+            AudioPlayer.PlayAudio($"hit{random.Next(1, 5)}", 0f, (float)((2 * (position.X + sprite.rectangle.Width / 2) / 256) - 1));
             canDispose = true;
         }
 
@@ -115,7 +115,7 @@ namespace NesJamGame.GameContent.Entities
         public override void OnEntityCollision(Entity entity)
         {
             if (entity.GetType() == typeof(Bullet))
-                if (((Bullet)entity).entity.GetType() == typeof(Player) && !((Bullet)entity).CanDispose())
+                if (((Bullet)entity).entity.GetType() == typeof(Player) && !((Bullet)entity).CanDispose() && !canDispose)
                 {
                     SendHit();
                     ((Bullet)entity).SendHit();

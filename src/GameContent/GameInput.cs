@@ -10,10 +10,10 @@ namespace NesJamGame.GameContent
             switch(input)
             {
                 case NESInput.A:
-                    return InputManager.IsNewPress(Keys.Space) || InputManager.IsNewPress(GamePadIndex.Any, Buttons.A);
+                    return InputManager.IsNewPress(Keys.Space) || InputManager.IsNewPress(Keys.Enter) || InputManager.IsNewPress(GamePadIndex.Any, Buttons.A);
 
                 case NESInput.B:
-                    return InputManager.IsNewPress(Keys.W) || InputManager.IsNewPress(Keys.Z) || InputManager.IsNewPress(GamePadIndex.Any, Buttons.B);
+                    return InputManager.IsNewPress(Keys.W) || InputManager.IsNewPress(Keys.Z) || InputManager.IsNewPress(GamePadIndex.Any, Buttons.B) || InputManager.IsNewPress(Keys.Back);
 
                 case NESInput.Up:
                     return InputManager.IsNewPress(Keys.Up) || InputManager.IsNewPress(GamePadIndex.Any, Buttons.DPadUp) || InputManager.IsNewPress(GamePadIndex.Any, Buttons.LeftThumbstickUp);

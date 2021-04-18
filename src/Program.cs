@@ -17,7 +17,7 @@ namespace NesJamGame
     {
         static void Main(string[] args)
         {
-            Game game = new Program();
+            game = new Program();
 
             var gamePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             Directory.CreateDirectory(Path.Combine(gamePath, "SaveData"));
@@ -50,9 +50,11 @@ namespace NesJamGame
 
         static bool stop = false;
 
+        static Game game;
         public static int CanvasScale { get; private set; }
         public static int ScreenWidth { get { return GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width; } }
         public static int ScreenHeight { get { return GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height; } }
+        public static double GameSpeed = 1;
 
         public Program()
         {
@@ -60,6 +62,7 @@ namespace NesJamGame
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             UpdateCanvasScale(3);
+            Window.Title = "Space Explorer";
         }
 
         protected override void Initialize()
@@ -68,7 +71,7 @@ namespace NesJamGame
             GlobalTime.Initialize();
 
             string scale = ConfigManager.GetValue("canvas_scale");
-            if (scale == null)
+            if (scale == null || Convert.ToInt32(scale) < 2 || !int.TryParse(scale, out _))
             {
                 ConfigManager.SetValue("canvas_scale", "2");
                 ConfigManager.SaveJson();
@@ -81,12 +84,36 @@ namespace NesJamGame
                 ConfigManager.SetValue("enable_sky", true.ToString());
                 ConfigManager.SaveJson();
             }
+            else if (!bool.TryParse(ConfigManager.GetValue("enable_sky"), out _))
+            {
+                ConfigManager.SetValue("enable_sky", true.ToString());
+                ConfigManager.SaveJson();
+            }
+
+            if (ConfigManager.GetValue("audio_volume") == null)
+            {
+                ConfigManager.SetValue("audio_volume", "10");
+                ConfigManager.SaveJson();
+            }
+            else if (!double.TryParse(ConfigManager.GetValue("audio_volume"), out _))
+            {
+                ConfigManager.SetValue("audio_volume", "10");
+                ConfigManager.SaveJson();
+            }
 
             if (SaveManager.GetValue("highscore") == null)
             {
                 SaveManager.SetValue("highscore", "0");
                 SaveManager.SaveJson();
             }
+            else if (!int.TryParse(SaveManager.GetValue("highscore"), out _))
+            {
+                SaveManager.SetValue("highscore", "0");
+                SaveManager.SaveJson();
+            }
+
+            int.TryParse(ConfigManager.GetValue("audio_volume"), out int volume);
+            AudioPlayer.Volume = volume;
 
             base.Initialize();
         }
@@ -111,6 +138,7 @@ namespace NesJamGame
             if (stop) Exit();
             InputManager.Update(CanvasScale);
             GlobalTime.Update(gameTime);
+            GlobalTime.ChangeSpeed(GameSpeed);
             SceneManager.UpdateScenes();
             ParticleManager.UpdateParticles();
             if (Convert.ToBoolean(ConfigManager.GetValue("enable_sky"))) sky.Update();
@@ -148,6 +176,11 @@ namespace NesJamGame
         public static void Quit()
         {
             stop = true;
+        }
+
+        public static void ShowSpeedAlert()
+        {
+            SDL.SDL_ShowSimpleMessageBox(SDL.SDL_MessageBoxFlags.SDL_MESSAGEBOX_WARNING, "HOLD ON A SECOND!", "You are about to change the in-game speed. This feature can break the game in some ways. Use at your own risk!\nGame Speed resets back to default value (10) when starting the game.\nPlease do not report bugs that occur with a non-standard game speed!", game.Window.Handle);
         }
     }
 }

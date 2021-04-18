@@ -115,7 +115,7 @@ namespace NesJamGame.GameContent.Entities
 
         private void ShootBullet()
         {
-            ContentIndex.Sounds["shoot"].Play();
+            AudioPlayer.PlayAudio("shoot", 0f, (float)((2*(pos.X+sprite.rectangle.Width/2) / 256)-1));
             shootDelay = 0;
             GameScene.AddEntity(new Bullet(this, BulletPath.StraightUp, new Vector2(pos.X + 4, pos.Y + 2), BULLET_SPEED));
             GameScene.AddEntity(new Bullet(this, BulletPath.StraightUp, new Vector2(pos.X + 10, pos.Y + 2), BULLET_SPEED));
@@ -124,7 +124,7 @@ namespace NesJamGame.GameContent.Entities
         public override void SendHit()
         {
             if (canDispose) return;
-            ContentIndex.Sounds[$"death{random.Next(1, 4)}"].Play();
+            AudioPlayer.PlayAudio($"death{random.Next(1, 4)}", 0f, (float)((2 * (pos.X + sprite.rectangle.Width / 2) / 256) - 1));
             GameScene.GameOver = true;
             canDispose = true;
         }

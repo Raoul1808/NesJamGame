@@ -82,6 +82,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Engine\AudioPlayer.cs" />
     <Compile Include="src\Engine\Button.cs" />
     <Compile Include="src\Engine\Graphics\HSLColor.cs" />
     <Compile Include="src\Engine\Graphics\ParticleManager.cs" />
