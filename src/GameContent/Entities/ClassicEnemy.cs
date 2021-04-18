@@ -104,7 +104,7 @@ namespace NesJamGame.GameContent.Entities
         public override void OnEntityCollision(Entity entity)
         {
             if (entity.GetType() == typeof(Bullet))
-                if (((Bullet)entity).entity.GetType() == typeof(Player) && !((Bullet)entity).CanDispose())
+                if (((Bullet)entity).entity.GetType() == typeof(Player) && !((Bullet)entity).CanDispose() && !canDispose)
                 {
                     SendHit();
                     ((Bullet)entity).SendHit();
