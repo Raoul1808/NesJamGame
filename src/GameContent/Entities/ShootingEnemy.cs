@@ -103,7 +103,7 @@ namespace NesJamGame.GameContent.Entities
 
         public override void SendHit()
         {
-            ContentIndex.Sounds[$"hit{random.Next(1, 5)}"].Play();
+            AudioPlayer.PlayAudio($"hit{random.Next(1, 5)}");
             canDispose = true;
         }
 

@@ -74,29 +74,29 @@ namespace NesJamGame.GameContent.Scenes
             if (GameInput.IsNewPress(NESInput.Down) && cursor < 22)
             {
                 cursor++;
-                ContentIndex.Sounds["select"].Play();
+                AudioPlayer.PlayAudio("select");
             }
             if (GameInput.IsNewPress(NESInput.Up) && cursor > 20)
             {
                 cursor--;
-                ContentIndex.Sounds["select"].Play();
+                AudioPlayer.PlayAudio("select");
             }
             if (GameInput.IsNewPress(NESInput.A) && cursor == 22)
             {
-                ContentIndex.Sounds["selectHit"].Play();
+                AudioPlayer.PlayAudio("selectHit");
                 Program.Quit();
             }
             if (GameInput.IsNewPress(NESInput.A) && cursor == 20)
             {
-                ContentIndex.Sounds["selectPlay"].Play();
-                ContentIndex.Sounds["selectHit"].Play();
+                AudioPlayer.PlayAudio("selectPlay");
+                AudioPlayer.PlayAudio("selectHit");
                 SceneManager.RefreshScene("GameScene");
                 GameScene.GameOver = false;
                 SceneManager.ChangeScene("GameScene");
             }
             if (GameInput.IsNewPress(NESInput.A) && cursor == 21)
             {
-                ContentIndex.Sounds["selectHit"].Play();
+                AudioPlayer.PlayAudio("selectHit");
                 isOptionMenu = true;
                 cursor = 21;
             }
@@ -104,34 +104,44 @@ namespace NesJamGame.GameContent.Scenes
 
         private void UpdateOptionsMenu()
         {
-            if (GameInput.IsNewPress(NESInput.Down) && cursor < 24)
+            if (GameInput.IsNewPress(NESInput.Down) && cursor < 25)
             {
                 cursor++;
-                ContentIndex.Sounds["select"].Play();
+                AudioPlayer.PlayAudio("select");
             }
             if (GameInput.IsNewPress(NESInput.Up) && cursor > 21)
             {
                 cursor--;
-                ContentIndex.Sounds["select"].Play();
+                AudioPlayer.PlayAudio("select");
             }
             if (GameInput.IsNewPress(NESInput.Left) && cursor == 21)
             {
-                ChangeCanvasScale(true);
-                ContentIndex.Sounds["selectHit"].Play();
+                if (AudioPlayer.Volume > 0) AudioPlayer.Volume--;
+                AudioPlayer.PlayAudio("selectHit");
             }
             if (GameInput.IsNewPress(NESInput.Right) && cursor == 21)
             {
-                ChangeCanvasScale(false);
-                ContentIndex.Sounds["selectHit"].Play();
+                if (AudioPlayer.Volume < 10) AudioPlayer.Volume++;
+                AudioPlayer.PlayAudio("selectHit");
             }
-            if (GameInput.IsNewPress(NESInput.A) && cursor == 22)
+            if (GameInput.IsNewPress(NESInput.Left) && cursor == 22)
             {
-                ContentIndex.Sounds["selectHit"].Play();
+                ChangeCanvasScale(true);
+                AudioPlayer.PlayAudio("selectHit");
+            }
+            if (GameInput.IsNewPress(NESInput.Right) && cursor == 22)
+            {
+                ChangeCanvasScale(false);
+                AudioPlayer.PlayAudio("selectHit");
+            }
+            if (GameInput.IsNewPress(NESInput.A) && cursor == 23)
+            {
+                AudioPlayer.PlayAudio("selectHit");
                 ConfigManager.SetValue("enable_sky", (!Convert.ToBoolean(ConfigManager.GetValue("enable_sky"))).ToString());
             }
-            if (GameInput.IsNewPress(NESInput.Left) && cursor == 23)
+            if (GameInput.IsNewPress(NESInput.Left) && cursor == 24)
             {
-                ContentIndex.Sounds["selectHit"].Play();
+                AudioPlayer.PlayAudio("selectHit");
                 if (!speedAlertShown)
                 {
                     Program.ShowSpeedAlert();
@@ -142,9 +152,9 @@ namespace NesJamGame.GameContent.Scenes
                     if (Program.GameSpeed > 0.6) Program.GameSpeed -= 0.1;
                 }
             }
-            if (GameInput.IsNewPress(NESInput.Right) && cursor == 23)
+            if (GameInput.IsNewPress(NESInput.Right) && cursor == 24)
             {
-                ContentIndex.Sounds["selectHit"].Play();
+                AudioPlayer.PlayAudio("selectHit");
                 if (!speedAlertShown)
                 {
                     Program.ShowSpeedAlert();
@@ -155,9 +165,10 @@ namespace NesJamGame.GameContent.Scenes
                     if (Program.GameSpeed < 2) Program.GameSpeed += 0.1;
                 }
             }
-            if (GameInput.IsNewPress(NESInput.A) && cursor == 24)
+            if ((GameInput.IsNewPress(NESInput.A) && cursor == 25) || GameInput.IsNewPress(NESInput.B))
             {
-                ContentIndex.Sounds["selectHit"].Play();
+                ConfigManager.SaveJson();
+                AudioPlayer.PlayAudio("selectHit");
                 isOptionMenu = false;
                 cursor = 21;
             }
@@ -166,10 +177,11 @@ namespace NesJamGame.GameContent.Scenes
         private void DrawOptionsMenu(SpriteBatch spriteBatch)
         {
             TextRenderer.RenderText(spriteBatch, "OPTIONS", new Point(10, 19));
-            TextRenderer.RenderText(spriteBatch, $"WINDOW SCALE  < {Program.CanvasScale} >", new Point(8, 21));
-            TextRenderer.RenderText(spriteBatch, $"BACKGROUND " + (Convert.ToBoolean(ConfigManager.GetValue("enable_sky")) ? " ON" : "OFF"), new Point(8, 22));
-            TextRenderer.RenderText(spriteBatch, $"GAME SPEED   " + ((Program.GameSpeed*10).ToString().Length > 1 ? "" : " ") + $"< {Program.GameSpeed*10} >", new Point(8, 23));
-            TextRenderer.RenderText(spriteBatch, "BACK", new Point(10, 24));
+            TextRenderer.RenderText(spriteBatch, $"VOLUME       < {(AudioPlayer.Volume.ToString().Length > 1 ? "" : " ")}{AudioPlayer.Volume} >", new Point(8, 21));
+            TextRenderer.RenderText(spriteBatch, $"WINDOW SCALE  < {Program.CanvasScale} >", new Point(8, 22));
+            TextRenderer.RenderText(spriteBatch, $"BACKGROUND      " + (Convert.ToBoolean(ConfigManager.GetValue("enable_sky")) ? " ON" : "OFF"), new Point(8, 23));
+            TextRenderer.RenderText(spriteBatch, $"GAME SPEED   " + ((Program.GameSpeed*10).ToString().Length > 1 ? "" : " ") + $"< {Program.GameSpeed*10} >", new Point(8, 24));
+            TextRenderer.RenderText(spriteBatch, "BACK", new Point(10, 25));
         }
 
         private void DrawMainMenu(SpriteBatch spriteBatch)

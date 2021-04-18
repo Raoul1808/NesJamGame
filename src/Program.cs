@@ -89,6 +89,17 @@ namespace NesJamGame
                 ConfigManager.SaveJson();
             }
 
+            if (ConfigManager.GetValue("audio_volume") == null)
+            {
+                ConfigManager.SetValue("audio_volume", "10");
+                ConfigManager.SaveJson();
+            }
+            else if (!double.TryParse(ConfigManager.GetValue("audio_volume"), out _))
+            {
+                ConfigManager.SetValue("audio_volume", "10");
+                ConfigManager.SaveJson();
+            }
+
             if (SaveManager.GetValue("highscore") == null)
             {
                 SaveManager.SetValue("highscore", "0");
@@ -99,6 +110,9 @@ namespace NesJamGame
                 SaveManager.SetValue("highscore", "0");
                 SaveManager.SaveJson();
             }
+
+            int.TryParse(ConfigManager.GetValue("audio_volume"), out int volume);
+            AudioPlayer.Volume = volume;
 
             base.Initialize();
         }

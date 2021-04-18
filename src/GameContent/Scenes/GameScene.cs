@@ -69,10 +69,26 @@ namespace NesJamGame.GameContent.Scenes
         {
             if (paused && !GameOver)
             {
-                if (GameInput.IsNewPress(NESInput.Down) && cursor < 14) { ContentIndex.Sounds["select"].Play(); cursor++; }
-                if (GameInput.IsNewPress(NESInput.Up) && cursor > 13) { ContentIndex.Sounds["select"].Play(); cursor--; }
-                if (GameInput.IsNewPress(NESInput.A) && cursor == 13) { ContentIndex.Sounds["selectPlay"].Play(); paused = false; }
-                if (GameInput.IsNewPress(NESInput.A) && cursor == 14) { ContentIndex.Sounds["selectHit"].Play(); SceneManager.ChangeScene("MenuScene"); }
+                if (GameInput.IsNewPress(NESInput.Down) && cursor < 14)
+                {
+                    AudioPlayer.PlayAudio("select");
+                    cursor++;
+                }
+                if (GameInput.IsNewPress(NESInput.Up) && cursor > 13)
+                {
+                    AudioPlayer.PlayAudio("select");
+                    cursor--;
+                }
+                if (GameInput.IsNewPress(NESInput.A) && cursor == 13)
+                {
+                    AudioPlayer.PlayAudio("selectPlay");
+                    paused = false;
+                }
+                if (GameInput.IsNewPress(NESInput.A) && cursor == 14)
+                {
+                    AudioPlayer.PlayAudio("selectHit");
+                    SceneManager.ChangeScene("MenuScene");
+                }
                 return;
             }
             time += GlobalTime.ElapsedGameMilliseconds / 1000;
@@ -94,7 +110,11 @@ namespace NesJamGame.GameContent.Scenes
                     }
                     triggerOnce = true;
                 }
-                if (GameInput.IsNewPress(NESInput.A)) { ContentIndex.Sounds["selectHit"].Play(); SceneManager.ChangeScene("MenuScene"); }
+                if (GameInput.IsNewPress(NESInput.A))
+                {
+                    AudioPlayer.PlayAudio("selectHit");
+                    SceneManager.ChangeScene("MenuScene");
+                }
             }
             Flip = false;
             if (time >= FLIP_TIME)

@@ -23,7 +23,7 @@ namespace NesJamGame.GameContent.Scenes
             if (time >= 1 && text == "")
             {
                 text = "RAOUL1808";
-                ContentIndex.Sounds["splash"].Play();
+                AudioPlayer.PlayAudio("splash");
             }
             if (time >= 2.5)
             {
