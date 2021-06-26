@@ -22,6 +22,7 @@ namespace NesJamGame.GameContent.Entities
         int dstYPos;
         int srcYPos;
         bool moving;
+        Rectangle bbox;
 
         public ClassicEnemy(double appearTime, int yPos, int? xPos = null, bool moving = true, bool left = true)
         {
@@ -39,6 +40,7 @@ namespace NesJamGame.GameContent.Entities
             srcYPos = (int)position.Y;
             progress = 0;
             this.moving = moving;
+            bbox = new Rectangle((int)position.X, (int)position.Y, sprite.rectangle.Width, sprite.rectangle.Height);
         }
 
         public override void Update()
@@ -72,6 +74,9 @@ namespace NesJamGame.GameContent.Entities
                 sprite.flip = sprite.flip == SpriteEffects.None ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             }
 
+            bbox.X = (int)position.X;
+            bbox.Y = (int)position.Y;
+
             base.Update();
         }
 
@@ -98,7 +103,7 @@ namespace NesJamGame.GameContent.Entities
 
         public override Rectangle GetBbox()
         {
-            return new Rectangle((int)position.X, (int)position.Y, sprite.rectangle.Width, sprite.rectangle.Height);
+            return bbox;
         }
 
         public override void OnEntityCollision(Entity entity)

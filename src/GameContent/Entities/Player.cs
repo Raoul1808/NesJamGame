@@ -34,6 +34,8 @@ namespace NesJamGame.GameContent.Entities
 
         bool canDispose = false;
 
+        Rectangle bbox;
+
         public Player(int x, int y)
         {
             sprite = new Sprite()
@@ -46,6 +48,7 @@ namespace NesJamGame.GameContent.Entities
             particleDelay = 0;
             speed = 0;
             random = new Random();
+            bbox = new Rectangle((int)x, (int)y, sprite.rectangle.Width, sprite.rectangle.Height);
         }
 
         public override void Update()
@@ -95,6 +98,10 @@ namespace NesJamGame.GameContent.Entities
                 shootDelay += time;
             if (particleDelay < PARTICLE_SPAWN_DELAY)
                 particleDelay += time;
+
+            bbox.X = (int)pos.X;
+            bbox.Y = (int)pos.Y;
+
             base.Update();
         }
 
@@ -131,7 +138,7 @@ namespace NesJamGame.GameContent.Entities
 
         public override Rectangle GetBbox()
         {
-            return new Rectangle((int)pos.X + 1, (int)pos.Y + 1, sprite.rectangle.Width - 2, sprite.rectangle.Height - 2);
+            return bbox;
         }
 
         public override void OnEntityCollision(Entity entity)

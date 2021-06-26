@@ -15,6 +15,8 @@ namespace NesJamGame.GameContent.Entities
         float bulletSpeed;
         bool canDispose;
 
+        Rectangle bbox;
+
         public Bullet(Entity entity, BulletPath path, Vector2 position, float bulletSpeed)
         {
             this.entity = entity;
@@ -27,6 +29,7 @@ namespace NesJamGame.GameContent.Entities
             this.bulletSpeed = bulletSpeed;
             canDispose = false;
             this.path = path;
+            bbox = new Rectangle((int)position.X, (int)position.Y, sprite.rectangle.Width, sprite.rectangle.Height);
         }
 
         public override void Update()
@@ -42,6 +45,9 @@ namespace NesJamGame.GameContent.Entities
                     position.Y += bulletSpeed * time;
                     break;
             }
+
+            bbox.X = (int)position.X;
+            bbox.Y = (int)position.Y;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -66,7 +72,7 @@ namespace NesJamGame.GameContent.Entities
 
         public override Rectangle GetBbox()
         {
-            return new Rectangle((int)position.X, (int)position.Y, sprite.rectangle.Width, sprite.rectangle.Height);
+            return bbox;
         }
 
         public override void OnEntityCollision(Entity entity)

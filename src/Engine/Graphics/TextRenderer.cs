@@ -43,16 +43,12 @@ namespace NesJamGame.Engine.Graphics
             int x = location.X - 1;
             for (int i = 1; i <= rectangles.Count; i++)
             {
-                if (x >= 31)
+                if (x > 30)
                 {
                     x = 0;
                     y++;
                 }
-                else
-                {
-                    x++;
-                }
-                spriteBatch.Draw(Characters, new Vector2(x * 8, y * 8), rectangles[i-1], Color.White);
+                spriteBatch.Draw(Characters, new Vector2(x++ * 8, y * 8), rectangles[i-1], Color.White);
             }
         }
     }
