@@ -10,8 +10,6 @@
  5. Open the solution (`.sln` file)
 
  Contributions are welcome.
-
- ### DO NOT COMPILE WITH THE ANYCPU PROFILE. It does not work. Please don't.
  
 ## Roadmap
  - [ ] Clean the code
