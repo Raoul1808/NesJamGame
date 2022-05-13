@@ -40,10 +40,10 @@ namespace NesJamGame.Engine.Graphics
             }
 
             int y = location.Y;
-            int x = location.X - 1;
+            int x = location.X;
             for (int i = 1; i <= rectangles.Count; i++)
             {
-                if (x > 30)
+                if (x > 31)
                 {
                     x = 0;
                     y++;
