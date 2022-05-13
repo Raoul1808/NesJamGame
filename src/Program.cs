@@ -40,6 +40,8 @@ namespace NesJamGame
 
             SaveManager.SaveJson();
             ConfigManager.SaveJson();
+            
+            game.Dispose();
         }
 
         static GraphicsDeviceManager graphics;
